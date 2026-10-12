@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostAngola | Notícias de Angola para Angola e a diáspora</title>
+<meta name="description" content="Notícias, dados e tendências de Angola em conteúdos claros e visuais, de fontes credíveis.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,700;6..72,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E; --red-dark:#9E0C24; --ink:#121212; --muted:#5C5C5C; --line:#E3E3E0; --bg:#FFFFFF; --soft:#F3F3F1; --gold:#E5A800;
+  --sans:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+
+/* Barra superior */
+.util{background:#121212;color:#d8d8d8;font-size:13px}
+.util .wrap{display:flex;justify-content:space-between;align-items:center;min-height:42px;gap:12px}
+.util .date{text-transform:capitalize;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#authBox{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.who{color:#fff;font-weight:600;margin-right:4px}
+.role{background:var(--gold);color:#2A1D00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-right:4px}
+.lnk{background:none;border:0;cursor:pointer;color:#d8d8d8;font-weight:600;padding:6px 8px;border-radius:6px}
+.lnk:hover{color:#fff;background:rgba(255,255,255,.1)}
+.cta{display:inline-flex;align-items:center;justify-content:center;background:var(--red);color:#fff;border:0;border-radius:6px;padding:7px 14px;font-weight:700;font-size:13px;cursor:pointer}
+.cta:hover{background:var(--red-dark)}
+.cta.wide{width:100%;padding:12px;font-size:15px}
+
+/* Cabeçalho */
+.mast{background:#fff;border-bottom:1px solid var(--line)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;padding-top:22px;padding-bottom:20px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo .mark{width:50px;height:50px;border-radius:12px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.22)}
+.logo h1{font-size:38px;line-height:1;font-weight:800;letter-spacing:-.03em}
+.logo p{font-size:13px;color:var(--muted);margin-top:4px}
+.mast .tagline{max-width:34ch;color:var(--muted);font-size:14px;text-align:right}
+
+/* Navegação por categorias */
+.cats{position:sticky;top:0;z-index:20;background:#fff;border-bottom:3px solid var(--red)}
+.cats .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.cats .wrap::-webkit-scrollbar{display:none}
+.cats button{flex:none;background:none;border:0;cursor:pointer;padding:14px 14px;font-weight:700;font-size:15px;color:#333;border-bottom:3px solid transparent;margin-bottom:-3px}
+.cats button:hover{color:var(--red)}
+.cats button[aria-pressed="true"]{color:var(--red);border-bottom-color:var(--red)}
+
+/* Faixa mais recente */
+.latest{background:var(--soft);border-bottom:1px solid var(--line);font-size:14px}
+.latest .wrap{display:flex;gap:12px;align-items:center;padding-top:10px;padding-bottom:10px;min-width:0}
+.latest b{background:var(--red);color:#fff;padding:2px 10px;border-radius:4px;font-size:12px;flex:none}
+.latest a{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.latest a:hover{color:var(--red)}
+
+main{padding:28px 0 20px}
+.hero{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:24px;margin-bottom:36px}
+.lead{position:relative;display:block;border-radius:6px;overflow:hidden;min-height:440px;color:#fff;background:linear-gradient(135deg,#444,#111)}
+.lead .thumb{position:absolute;inset:0}
+.lead .thumb img{width:100%;height:100%;object-fit:cover}
+.lead .shade{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 8%,rgba(0,0,0,.15) 65%)}
+.lead-text{position:absolute;left:0;right:0;bottom:0;padding:28px}
+.lead h2{font-family:var(--serif);font-size:clamp(28px,3.6vw,44px);line-height:1.08;font-weight:800;letter-spacing:-.01em;margin:8px 0 10px;max-width:22ch}
+.lead p{font-size:16px;max-width:60ch;color:rgba(255,255,255,.88)}
+.lead:hover h2{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:4px}
+.tag{display:inline-block;background:var(--red);color:#fff;font-weight:700;font-size:12.5px;padding:3px 10px;border-radius:4px}
+.meta{display:block;font-size:12.5px;color:var(--muted);margin-top:6px}
+.lead .meta{color:rgba(255,255,255,.75);margin-top:12px}
+.cat{color:var(--red);font-weight:700;font-size:13px}
+
+.sides{display:flex;flex-direction:column}
+.side-head{font-weight:800;font-size:18px;padding-bottom:10px;border-bottom:3px solid var(--ink)}
+.side{display:grid;grid-template-columns:1fr 96px;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.side h3{font-family:var(--serif);font-size:19px;line-height:1.2;font-weight:700;margin-top:3px}
+.side:hover h3{color:var(--red)}
+.thumb{background:linear-gradient(135deg,#555,#222);overflow:hidden;position:relative}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb.sm{border-radius:4px;aspect-ratio:1}
+
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:3px solid var(--ink);padding-bottom:10px;margin-bottom:20px}
+.sec-head h2{font-size:22px;font-weight:800}
+.sec-head span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 24px}
+.card{display:flex;flex-direction:column;gap:10px}
+.card .thumb{aspect-ratio:16/10;border-radius:4px}
+.card h3{font-family:var(--serif);font-size:22px;line-height:1.15;font-weight:700}
+.card:hover h3{color:var(--red)}
+.card p{color:var(--muted);font-size:14.5px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.more{display:block;margin:34px auto 0;background:#fff;border:2px solid var(--ink);border-radius:6px;padding:11px 26px;font-weight:700;cursor:pointer}
+.more:hover{background:var(--ink);color:#fff}
+
+.empty{border:1px dashed #bbb;border-radius:10px;padding:48px 24px;text-align:center;color:var(--muted)}
+.empty h2{color:var(--ink);font-size:22px;margin-bottom:8px}
+.empty .cta{margin-top:16px;padding:10px 18px;font-size:14px}
+.setup{background:#FFF3D6;color:#6B4400;border-radius:10px;padding:18px 20px}
+.setup code{background:rgba(0,0,0,.08);padding:1px 6px;border-radius:4px}
+
+/* Missão */
+.mission{background:#121212;color:#fff;margin-top:48px;padding:56px 0}
+.mission .wrap{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:48px;align-items:start}
+.mission h2{font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);line-height:1.12;font-weight:800}
+.mission p{color:#cfcfcf;margin-top:16px;max-width:58ch}
+.pillars{display:flex;flex-direction:column}
+.pillar{padding:16px 0;border-top:1px solid #333}
+.pillar:first-child{border-top:0;padding-top:0}
+.pillar b{display:block;font-size:17px;margin-bottom:3px}
+.pillar span{color:#bdbdbd;font-size:14.5px}
+
+footer{background:#0b0b0b;color:#9a9a9a;font-size:13px;padding:22px 0}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+
+/* Leitor e login */
+dialog{margin:auto;border:0;border-radius:12px;padding:0;background:#fff;color:var(--ink);box-shadow:0 30px 90px rgba(0,0,0,.45);max-width:calc(100% - 24px)}
+dialog::backdrop{background:rgba(10,10,10,.65)}
+#readDlg{width:min(760px,calc(100% - 24px));max-height:calc(100% - 32px);overflow:auto}
+.r-close{position:sticky;top:0;float:right;margin:12px;z-index:2;width:38px;height:38px;border-radius:50%;border:0;background:rgba(0,0,0,.7);color:#fff;font-size:20px;cursor:pointer;line-height:1}
+.r-img{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#555,#222)}
+.r-img img{width:100%;height:100%;object-fit:cover;display:block}
+.r-body{padding:26px 32px 32px}
+.r-body h2{font-family:var(--serif);font-size:clamp(28px,4vw,38px);line-height:1.1;font-weight:800;margin:8px 0 10px}
+.r-lead{font-family:var(--serif);font-size:20px;line-height:1.45;color:#333;margin:14px 0 18px;font-weight:500}
+.r-text p{font-family:var(--serif);font-size:18.5px;line-height:1.65;margin-bottom:16px;max-width:64ch}
+.r-src{margin-top:20px;padding:14px 16px;background:var(--soft);border-radius:8px;font-size:14px}
+.r-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.btn2{display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:6px;border:1px solid #ccc;background:#fff;font-weight:600;font-size:14px;cursor:pointer}
+.btn2:hover{background:var(--soft)}
+
+#authDlg{width:min(400px,calc(100% - 24px))}
+#authForm{padding:24px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:2px solid var(--line);margin-bottom:18px}
+.tabs button{background:none;border:0;padding:10px;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px}
+.tabs button[aria-selected="true"]{color:var(--red);border-bottom-color:var(--red)}
+#authForm label{display:block;font-weight:600;font-size:13.5px;margin-bottom:12px}
+#authForm input{display:block;width:100%;margin-top:5px;padding:11px 12px;border:1px solid #ccc;border-radius:8px;font-size:15px}
+#authForm input:focus{border-color:var(--red);outline:none;box-shadow:0 0 0 3px rgba(200,16,46,.18)}
+.msg{min-height:20px;font-size:13.5px;margin-bottom:8px;color:var(--red)}
+.msg.ok{color:#1B7F4B}
+#authForm .lnk{color:var(--muted);display:block;margin:10px auto 0}
+#authForm .lnk:hover{color:var(--ink);background:var(--soft)}
+
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}
+  .lead{min-height:360px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mission .wrap{grid-template-columns:1fr;gap:28px}
+  .mast .tagline{display:none}
+}
+@media (max-width:560px){
+  .util .date{display:none}
+  .util .wrap{justify-content:flex-end}
+  .logo h1{font-size:30px}
+  .logo .mark{width:42px;height:42px;font-size:17px}
+  .grid{grid-template-columns:1fr}
+  .lead-text{padding:20px}
+  .r-body{padding:20px}
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+</style>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+</head>
+<body>
+
+<div class="util">
+  <div class="wrap">
+    <span class="date" id="today"></span>
+    <div id="authBox"></div>
+  </div>
+</div>
+
+<header class="mast">
+  <div class="wrap">
+    <a class="logo" href="index.html" aria-label="PostAngola, página inicial">
+      <div class="mark">PA</div>
+      <div><h1>PostAngola</h1><p>Angola e diáspora</p></div>
+    </a>
+    <p class="tagline">Notícias, dados e tendências de Angola, de fontes credíveis.</p>
+  </div>
+</header>
+
+<nav class="cats" aria-label="Categorias"><div class="wrap" id="catNav"></div></nav>
+<div class="latest" id="latest" hidden><div class="wrap"><b>Mais recente</b><a id="latestLink" href="#"></a></div></div>
+
+<main class="wrap" id="content" aria-live="polite"></main>
+
+<section class="mission" id="sobre">
+  <div class="wrap">
+    <div>
+      <h2>Notícias de Angola, feitas para circular</h2>
+      <p>O PostAngola é uma plataforma digital que transforma notícias, dados e tendências de Angola em conteúdos visuais modernos para as redes sociais. Reunimos informação de fontes credíveis, escrevemos resumos claros, destacamos as estatísticas que importam e criamos publicações para informar, educar e inspirar os angolanos, em Angola e na diáspora.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><b>Fontes credíveis</b><span>Cada notícia mostra a origem e liga ao texto original sempre que existe.</span></div>
+      <div class="pillar"><b>Resumos claros</b><span>O essencial em poucas linhas, com os números que ajudam a perceber a história.</span></div>
+      <div class="pillar"><b>Para todos os angolanos</b><span>Conteúdo pensado para quem vive em Angola e para quem está lá fora.</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="year"></span> PostAngola</span>
+    <span>Notícias credíveis de Angola para Angola e para o mundo.</span>
+  </div>
+</footer>
+
+<dialog id="readDlg" aria-label="Notícia"><button class="r-close" id="rClose" aria-label="Fechar">×</button><div id="readBody"></div></dialog>
+
+<dialog id="authDlg" aria-label="Entrar ou criar conta">
+  <form id="authForm">
+    <div class="tabs" role="tablist">
+      <button type="button" data-mode="in" aria-selected="true">Entrar</button>
+      <button type="button" data-mode="up" aria-selected="false">Criar conta</button>
+    </div>
+    <label id="nameRow" hidden>Nome<input id="aName" autocomplete="name"></label>
+    <label>Email<input type="email" id="aEmail" required autocomplete="email"></label>
+    <label>Palavra-passe<input type="password" id="aPass" required minlength="6" autocomplete="current-password"></label>
+    <p class="msg" id="aMsg" role="alert"></p>
+    <button class="cta wide" id="aSubmit">Entrar</button>
+    <button type="button" class="lnk" id="aClose">Cancelar</button>
+  </form>
+</dialog>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const enc=encodeURIComponent;
+function safeUrl(u){try{const x=new URL(u);return (x.protocol==='https:'||x.protocol==='http:')?x.href:''}catch(e){return ''}}
+
+const CATS=['Economia','Política','Sociedade','Educação','Energia','Tecnologia','Desporto','Cultura','Diáspora'];
+const GRAD={Economia:['#0B6E4F','#063B2A'],'Política':['#1F3A93','#101F52'],Sociedade:['#8A4B08','#4A2704'],'Educação':['#6B2FA0','#381456'],Energia:['#C77700','#6E4000'],Tecnologia:['#0A6C8F','#043A4D'],Desporto:['#C8102E','#6E0819'],Cultura:['#A3195B','#58092F'],'Diáspora':['#2A2A2A','#000000']};
+const grad=c=>{const g=GRAD[c]||['#555','#222'];return 'background:linear-gradient(135deg,'+g[0]+','+g[1]+')'};
+
+const CFG=window.PA_CONFIG||{};
+const configured=CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY&&!/COLE_AQUI/.test(CFG.SUPABASE_URL+CFG.SUPABASE_ANON_KEY);
+const sb=(configured&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
+
+let articles=[],filter='Todas',shown=9,user=null,profile=null,loaded=false;
+const isEditor=()=>profile&&(profile.role==='editor'||profile.role==='admin');
+
+/* ---------- Datas ---------- */
+function ago(iso){
+  const d=new Date(iso),s=(Date.now()-d)/1000,rtf=new Intl.RelativeTimeFormat('pt',{numeric:'auto'});
+  if(isNaN(s))return '';
+  if(s<3600)return rtf.format(-Math.max(1,Math.round(s/60)),'minute');
+  if(s<86400)return rtf.format(-Math.round(s/3600),'hour');
+  if(s<86400*7)return rtf.format(-Math.round(s/86400),'day');
+  return d.toLocaleDateString('pt-PT',{day:'numeric',month:'short',year:'numeric'});
+}
+$('#today').textContent=new Date().toLocaleDateString('pt-PT',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+$('#year').textContent=new Date().getFullYear();
+
+/* ---------- Blocos de HTML ---------- */
+const imgTag=a=>{const u=safeUrl(a.image_url);return u?'<img src="'+esc(u)+'" alt="" loading="lazy" onerror="this.remove()">':''};
+const metaOf=a=>(a.source_name?esc(a.source_name)+' · ':'')+esc(ago(a.published_at||a.created_at));
+const href=a=>'#noticia-'+a.id;
+function leadHTML(a){
+  return '<a class="lead" href="'+href(a)+'" style="'+grad(a.category)+'"><div class="thumb">'+imgTag(a)+'</div><div class="shade"></div>'+
+    '<div class="lead-text"><span class="tag">'+esc(a.category)+'</span><h2>'+esc(a.title)+'</h2>'+(a.summary?'<p>'+esc(a.summary)+'</p>':'')+'<span class="meta">'+metaOf(a)+'</span></div></a>';
+}
+function sideHTML(a){
+  return '<a class="side" href="'+href(a)+'"><div><span class="cat">'+esc(a.category)+'</span><h3>'+esc(a.title)+'</h3><span class="meta">'+metaOf(a)+'</span></div><div class="thumb sm" style="'+grad(a.category)+'">'+imgTag(a)+'</div></a>';
+}
+function cardHTML(a){
+  return '<a class="card" href="'+href(a)+'"><div class="thumb" style="'+grad(a.category)+'">'+imgTag(a)+'</div><span class="cat">'+esc(a.category)+'</span><h3>'+esc(a.title)+'</h3>'+(a.summary?'<p>'+esc(a.summary)+'</p>':'')+'<span class="meta">'+metaOf(a)+'</span></a>';
+}
+
+/* ---------- Feed ---------- */
+function renderNav(){
+  const nav=$('#catNav');
+  const extra=[...new Set(articles.map(a=>a.category))].filter(c=>!CATS.includes(c));
+  nav.innerHTML=['Todas',...CATS,...extra].map(c=>'<button type="button" data-cat="'+esc(c)+'" aria-pressed="'+(c===filter)+'">'+esc(c)+'</button>').join('');
+}
+function renderFeed(){
+  renderNav();
+  const box=$('#content');
+  if(!sb){
+    box.innerHTML='<div class="setup"><b>Falta ligar o Supabase.</b> Abra o ficheiro <code>config.js</code> e cole o Project URL e a chave anon do seu projeto.</div>';
+    $('#latest').hidden=true;return;
+  }
+  if(!loaded){box.innerHTML='<div class="empty">A carregar notícias…</div>';return}
+  const list=articles.filter(a=>filter==='Todas'||a.category===filter);
+  if(articles.length){const a=articles[0];$('#latest').hidden=false;const l=$('#latestLink');l.textContent=a.title;l.href=href(a)}else $('#latest').hidden=true;
+  if(!list.length){
+    box.innerHTML='<div class="empty"><h2>'+(articles.length?'Sem notícias nesta categoria':'Ainda não há notícias publicadas')+'</h2><p>'+(articles.length?'Experimente outra categoria.':'Volte em breve.')+'</p>'+
+      (isEditor()?'<a class="cta" href="PostAngola.html">Publicar a primeira notícia</a>':'')+'</div>';
+    return;
+  }
+  const lead=list.find(a=>a.featured)||list[0];
+  const rest=list.filter(a=>a!==lead);
+  const sides=rest.slice(0,3),more=rest.slice(3);
+  let h='<section class="hero">'+leadHTML(lead)+'<div class="sides"><div class="side-head">Em destaque</div>'+(sides.map(sideHTML).join('')||'<p class="meta" style="margin-top:14px">Mais notícias em breve.</p>')+'</div></section>';
+  if(more.length){
+    h+='<div class="sec-head"><h2>Mais notícias</h2><span>'+list.length+' publicadas</span></div><div class="grid">'+more.slice(0,shown).map(cardHTML).join('')+'</div>';
+    if(more.length>shown)h+='<button class="more" id="moreBtn" type="button">Ver mais notícias</button>';
+  }
+  box.innerHTML=h;
+}
+$('#catNav').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;filter=b.getAttribute('data-cat');shown=9;renderFeed();window.scrollTo({top:0})});
+$('#content').addEventListener('click',e=>{if(e.target.id==='moreBtn'){shown+=9;renderFeed()}});
+
+async function loadArticles(){
+  if(!sb){renderFeed();return}
+  renderFeed();
+  const {data,error}=await sb.from('articles').select('*').eq('status','published').order('published_at',{ascending:false}).limit(80);
+  loaded=true;
+  if(error){$('#content').innerHTML='<div class="empty"><h2>Não foi possível carregar as notícias</h2><p>'+esc(error.message)+'</p></div>';return}
+  articles=data||[];renderFeed();openFromHash();
+}
+
+/* ---------- Leitor ---------- */
+const readDlg=$('#readDlg');
+function openFromHash(){
+  const m=location.hash.match(/^#noticia-([0-9a-f-]{36})$/i);
+  if(!m){if(readDlg.open)readDlg.close();return}
+  const a=articles.find(x=>x.id===m[1]);
+  if(!a){return}
+  const src=safeUrl(a.source_url);
+  const paras=(a.body||'').split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
+  $('#readBody').innerHTML=
+    '<div class="r-img" style="'+grad(a.category)+'">'+imgTag(a)+'</div><div class="r-body"><span class="tag">'+esc(a.category)+'</span><h2>'+esc(a.title)+'</h2><span class="meta">'+metaOf(a)+'</span>'+
+    (a.summary?'<p class="r-lead">'+esc(a.summary)+'</p>':'')+
+    (paras.length?'<div class="r-text">'+paras.map(p=>'<p>'+esc(p)+'</p>').join('')+'</div>':'')+
+    '<div class="r-src"><b>Fonte:</b> '+esc(a.source_name||'PostAngola')+(src?' · <a href="'+esc(src)+'" target="_blank" rel="noopener noreferrer" style="color:var(--red);font-weight:700">Ler no original</a>':'')+'</div>'+
+    '<div class="r-actions"><button class="btn2" id="rWa" type="button">Partilhar no WhatsApp</button><button class="btn2" id="rCopy" type="button">Copiar link</button></div></div>';
+  $('#rWa').onclick=()=>window.open('https://wa.me/?text='+enc(a.title+'\n'+location.href),'_blank','noopener,noreferrer');
+  $('#rCopy').onclick=async()=>{try{await navigator.clipboard.writeText(location.href);$('#rCopy').textContent='Link copiado'}catch(e){$('#rCopy').textContent='Copie o endereço da barra'}};
+  if(!readDlg.open)readDlg.showModal();
+  readDlg.scrollTop=0;
+  document.title=a.title+' | PostAngola';
+}
+window.addEventListener('hashchange',openFromHash);
+function closeReader(){if(readDlg.open)readDlg.close()}
+$('#rClose').addEventListener('click',closeReader);
+readDlg.addEventListener('click',e=>{if(e.target===readDlg)closeReader()});
+readDlg.addEventListener('close',()=>{if(location.hash)history.replaceState(null,'',location.pathname+location.search);document.title='PostAngola | Notícias de Angola para Angola e a diáspora'});
+
+/* ---------- Autenticação ---------- */
+const authDlg=$('#authDlg');let mode='in';
+function renderAuth(){
+  const box=$('#authBox');
+  if(!user){box.innerHTML='<button class="lnk" type="button" data-act="in">Entrar</button><button class="cta" type="button" data-act="up">Criar conta</button>';return}
+  const name=(profile&&profile.full_name)||user.email||'Leitor';
+  let h='<span class="who">Olá, '+esc(name.split(' ')[0])+'</span>';
+  if(isEditor())h+='<span class="role">'+(profile.role==='admin'?'Admin':'Editor')+'</span><a class="cta" href="PostAngola.html">Painel PostAngola</a>';
+  h+='<button class="lnk" type="button" data-act="out">Sair</button>';
+  box.innerHTML=h;
+}
+$('#authBox').addEventListener('click',async e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const act=b.getAttribute('data-act');
+  if(act==='in'||act==='up')openAuth(act);
+  if(act==='out'&&sb){await sb.auth.signOut();user=null;profile=null;renderAuth();renderFeed()}
+});
+function setMode(m){
+  mode=m;
+  authDlg.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.getAttribute('data-mode')===m));
+  $('#nameRow').hidden=m!=='up';
+  $('#aSubmit').textContent=m==='in'?'Entrar':'Criar conta';
+  $('#aPass').setAttribute('autocomplete',m==='in'?'current-password':'new-password');
+  setMsg('');
+}
+function setMsg(t,ok){const m=$('#aMsg');m.textContent=t;m.classList.toggle('ok',!!ok)}
+function openAuth(m){setMode(m||'in');if(!authDlg.open)authDlg.showModal();$('#aEmail').focus()}
+authDlg.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>setMode(b.getAttribute('data-mode'))));
+$('#aClose').addEventListener('click',()=>authDlg.close());
+authDlg.addEventListener('click',e=>{if(e.target===authDlg)authDlg.close()});
+function friendly(msg){
+  const m=(msg||'').toLowerCase();
+  if(m.includes('invalid login'))return 'Email ou palavra-passe incorretos.';
+  if(m.includes('already registered'))return 'Este email já tem conta. Use Entrar.';
+  if(m.includes('at least'))return 'A palavra-passe precisa de pelo menos 6 caracteres.';
+  if(m.includes('not confirmed'))return 'Confirme o email antes de entrar. Verifique a sua caixa de correio.';
+  if(m.includes('rate limit'))return 'Muitas tentativas. Aguarde um pouco e tente de novo.';
+  return msg||'Ocorreu um erro. Tente de novo.';
+}
+$('#authForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!sb){setMsg('Falta configurar o Supabase em config.js.');return}
+  const email=$('#aEmail').value.trim(),password=$('#aPass').value,btn=$('#aSubmit');
+  btn.disabled=true;setMsg('');
+  try{
+    if(mode==='in'){
+      const {error}=await sb.auth.signInWithPassword({email,password});
+      if(error)throw error;
+      authDlg.close();
+    }else{
+      const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:$('#aName').value.trim()||email.split('@')[0]}}});
+      if(error)throw error;
+      if(data.session){authDlg.close()}
+      else setMsg('Conta criada. Confirme o email que enviámos e depois entre.',true);
+    }
+  }catch(err){setMsg(friendly(err.message))}
+  finally{btn.disabled=false}
+});
+
+async function applySession(session){
+  user=session?session.user:null;profile=null;
+  if(user){
+    const {data}=await sb.from('profiles').select('full_name,role').eq('id',user.id).maybeSingle();
+    profile=data||{full_name:user.email,role:'reader'};
+  }
+  renderAuth();renderFeed();
+}
+
+/* ---------- Início ---------- */
+renderAuth();
+if(sb){
+  sb.auth.getSession().then(({data})=>{if(data.session)return applySession(data.session)});
+  sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>applySession(session),0)});
+}
+loadArticles();
+if(new URLSearchParams(location.search).get('login')==='1'&&sb)openAuth('in');
+})();
+</script>
+</body>
+</html>

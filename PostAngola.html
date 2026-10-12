@@ -172,13 +172,26 @@ dialog::backdrop{background:rgba(10,8,6,.55)}
   .stage{width:min(100%,calc(60vh * var(--ar)))}
 }
 @media (prefers-reduced-motion: reduce){*{transition:none!important}}
+#gate{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
+.gate-box{max-width:420px}
+.gate-box h2{font-size:22px;margin-bottom:8px}
+.gate-box p{color:var(--muted);margin-bottom:16px}
+.li .acts{flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){#userName{display:none}}
 </style>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
 <body>
+
+<div id="gate"><div class="gate-box"><h2>A verificar o acesso…</h2></div></div>
 
 <header class="topbar">
   <div class="brand"><div class="brand-mark">PA</div><span class="name" id="brandName">PostAngola</span></div>
   <div class="top-actions">
+    <a class="btn sm" href="index.html">Ver site</a>
+    <span class="pill" id="userName"></span>
+    <button class="btn sm" id="btnSignOut">Sair</button>
     <button class="link-chip empty" id="linkChip" data-go="definicoes" title="Endereço do site usado nas partilhas"><i class="dot"></i><span id="linkChipText">Definir endereço do site</span></button>
     <button class="icon-btn" id="themeBtn" aria-label="Alternar tema claro/escuro" title="Tema">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -190,6 +203,7 @@ dialog::backdrop{background:rgba(10,8,6,.55)}
   <nav class="rail" aria-label="Navegação principal">
     <button class="nav" data-go="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg>Início</button>
     <button class="nav" data-go="criar"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>Criar post</button>
+    <button class="nav" data-go="publicacoes"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>Publicações</button>
     <button class="nav" data-go="noticias"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Notícias</button>
     <button class="nav" data-go="automacao"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Automação</button>
     <button class="nav" data-go="definicoes"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Definições</button>
@@ -233,11 +247,12 @@ dialog::backdrop{background:rgba(10,8,6,.55)}
           <div class="card">
             <div class="field"><label class="f" for="fTitulo">Título</label><input type="text" id="fTitulo" maxlength="140" autocomplete="off"></div>
             <div class="field"><label class="f" for="fResumo">Resumo</label><textarea id="fResumo" maxlength="280"></textarea><div class="hint"><span id="resumoCount">0</span>/280 caracteres</div></div>
+            <div class="field"><label class="f" for="fBody">Texto completo (opcional)</label><textarea id="fBody" rows="6" placeholder="Separe os parágrafos com uma linha em branco."></textarea></div>
             <div class="row2">
               <div class="field"><label class="f" for="fCategoria">Categoria</label><input type="text" id="fCategoria" list="cats" autocomplete="off"><datalist id="cats"></datalist></div>
               <div class="field"><label class="f" for="fFonte">Fonte</label><input type="text" id="fFonte" placeholder="Ex.: nome do jornal" autocomplete="off"></div>
             </div>
-            <div class="field"><label class="f" for="fLink">Link da notícia (opcional)</label><input type="url" id="fLink" placeholder="Se vazio, usa o endereço do site" autocomplete="off"></div>
+            <div class="field"><label class="f" for="fLink">Link da fonte original (opcional)</label><input type="url" id="fLink" placeholder="https://..." autocomplete="off"><div class="hint">Depois de publicar no site, este campo passa a ter o link da notícia no PostAngola, para usar nas partilhas.</div></div>
             <div class="field"><label class="f" for="fTags">Hashtags</label><input type="text" id="fTags" autocomplete="off"></div>
             <div class="field">
               <label class="f" for="fImg">Imagem de fundo (opcional)</label>
@@ -270,7 +285,8 @@ dialog::backdrop{background:rgba(10,8,6,.55)}
           <div class="preview-wrap">
             <div class="stage" id="stage"><canvas id="cv" role="img" aria-label="Pré-visualização do post"></canvas></div>
             <div class="actions">
-              <button class="btn primary" id="btnDownload">Descarregar imagem</button>
+              <button class="btn primary" id="btnPublishSite">Publicar no site</button>
+              <button class="btn" id="btnDownload">Descarregar imagem</button>
               <button class="btn" id="btnNative" hidden>Partilhar no telemóvel</button>
               <button class="btn" id="btnDraft">Guardar rascunho</button>
             </div>
@@ -327,6 +343,12 @@ dialog::backdrop{background:rgba(10,8,6,.55)}
           <div class="list" id="queueList"><div class="empty">Gere uma fila para ver os posts aqui.</div></div>
         </div>
       </div>
+    </section>
+
+    <!-- PUBLICAÇÕES -->
+    <section class="view" id="v-publicacoes" hidden>
+      <div class="page-head"><div><h1>Publicações</h1><p class="sub">Notícias publicadas no site. Pode destacar, despublicar ou apagar.</p></div><a class="btn" href="index.html" target="_blank" rel="noopener">Abrir o site</a></div>
+      <div class="card"><div class="list" id="pubList"><div class="empty">A carregar…</div></div></div>
     </section>
 
     <!-- DEFINIÇÕES -->
@@ -415,7 +437,7 @@ const CAP_TABS=['whatsapp','facebook','linkedin','x','instagram','tiktok','youtu
 let settings=Object.assign({brand:'PostAngola',url:'',tags:'#Angola #PostAngola',source:''},store.get('settings',{}));
 let drafts=store.get('drafts',[]);
 let activity=store.get('activity',[]);
-let fmt='sq',theme='vermelho',img=null,curTab='whatsapp';
+let fmt='sq',theme='vermelho',img=null,imgFile=null,curTab='whatsapp';
 const edited={};
 let queue=[];
 
@@ -440,6 +462,7 @@ function go(view){
   if(view==='inicio')renderDash();
   if(view==='criar'){draw();refreshCaptions()}
   if(view==='definicoes')fillSettings();
+  if(view==='publicacoes')loadPubs();
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.getAttribute('data-go'))});
 
@@ -483,11 +506,11 @@ function renderDash(){
 }
 
 /* ---------- Formulário ---------- */
-const F={titulo:$('#fTitulo'),resumo:$('#fResumo'),cat:$('#fCategoria'),fonte:$('#fFonte'),link:$('#fLink'),tags:$('#fTags')};
+const F={titulo:$('#fTitulo'),resumo:$('#fResumo'),body:$('#fBody'),cat:$('#fCategoria'),fonte:$('#fFonte'),link:$('#fLink'),tags:$('#fTags')};
 $('#cats').innerHTML=CATS.map(c=>'<option value="'+esc(c)+'">').join('');
-function readPost(){return{title:F.titulo.value.trim(),summary:F.resumo.value.trim(),category:F.cat.value.trim(),source:F.fonte.value.trim(),link:normUrl(F.link.value),tags:F.tags.value.trim()}}
+function readPost(){return{title:F.titulo.value.trim(),summary:F.resumo.value.trim(),body:F.body.value.trim(),category:F.cat.value.trim(),source:F.fonte.value.trim(),link:normUrl(F.link.value),tags:F.tags.value.trim()}}
 function loadPost(p,f,t){
-  F.titulo.value=p.title||'';F.resumo.value=p.summary||'';F.cat.value=p.category||'';
+  F.titulo.value=p.title||'';F.resumo.value=p.summary||'';F.body.value=p.body||'';F.cat.value=p.category||'';
   F.fonte.value=p.source!==undefined&&p.source!==''?p.source:(settings.source||'');
   F.link.value=p.link||'';F.tags.value=p.tags||settings.tags||'';
   if(f)setRadio('fmt',f);if(t)setRadio('theme',t);
@@ -510,10 +533,10 @@ $('#fImg').addEventListener('change',e=>{
   const f=e.target.files&&e.target.files[0];if(!f)return;
   if(f.size>15*1024*1024){toast('A imagem é grande demais. Use um ficheiro até 15 MB.');e.target.value='';return}
   const rd=new FileReader();
-  rd.onload=()=>{const im=new Image();im.onload=()=>{img=im;$('#imgHint').textContent='Imagem: '+f.name;$('#imgClear').hidden=false;schedDraw()};im.onerror=()=>toast('Não foi possível ler esta imagem.');im.src=rd.result};
+  rd.onload=()=>{const im=new Image();im.onload=()=>{img=im;imgFile=f;$('#imgHint').textContent='Imagem: '+f.name;$('#imgClear').hidden=false;schedDraw()};im.onerror=()=>toast('Não foi possível ler esta imagem.');im.src=rd.result};
   rd.readAsDataURL(f);
 });
-$('#imgClear').addEventListener('click',()=>{img=null;$('#fImg').value='';$('#imgHint').textContent='Sem imagem, o post usa um fundo de cor.';$('#imgClear').hidden=true;schedDraw()});
+$('#imgClear').addEventListener('click',()=>{img=null;imgFile=null;$('#fImg').value='';$('#imgHint').textContent='Sem imagem, o post usa um fundo de cor.';$('#imgClear').hidden=true;schedDraw()});
 
 /* ---------- Canvas ---------- */
 const cv=$('#cv'),ctx=cv.getContext('2d');
@@ -772,11 +795,93 @@ $('#sWipe').addEventListener('click',()=>{
   refreshTop();fillSettings();toast('Dados locais apagados.');
 });
 
+/* ---------- Supabase: acesso e publicação ---------- */
+const CFG=window.PA_CONFIG||{};
+const sb=(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY&&!/COLE_AQUI/.test(CFG.SUPABASE_URL+CFG.SUPABASE_ANON_KEY)&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
+let me=null,publishedForm=false;
+function gate(html){const g=$('#gate');g.hidden=false;g.querySelector('.gate-box').innerHTML=html}
+async function initAuth(){
+  if(!sb){gate('<h2>Falta configurar o Supabase</h2><p>Abra o ficheiro config.js e cole o Project URL e a chave anon do seu projeto.</p><a class="btn" href="index.html">Voltar ao site</a>');return}
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){location.replace('index.html?login=1');return}
+  const {data:prof,error}=await sb.from('profiles').select('full_name,role').eq('id',session.user.id).maybeSingle();
+  if(error||!prof||!['editor','admin'].includes(prof.role)){
+    gate('<h2>Acesso reservado a editores</h2><p>A sua conta não tem permissão para criar publicações. Peça a um administrador para ativar o seu acesso.</p><a class="btn primary" href="index.html">Voltar ao site</a>');
+    return;
+  }
+  me={id:session.user.id,name:prof.full_name||session.user.email,role:prof.role};
+  $('#userName').textContent=me.name+' · '+(me.role==='admin'?'Admin':'Editor');
+  $('#gate').hidden=true;
+}
+$('#btnSignOut').addEventListener('click',async()=>{if(sb)await sb.auth.signOut();location.href='index.html'});
+Object.values(F).forEach(el=>el.addEventListener('input',()=>{publishedForm=false}));
+
+async function publishSite(){
+  if(!sb||!me){toast('Inicie sessão como editor.');return}
+  const p=readPost();
+  if(!p.title||!p.summary){toast('Preencha o título e o resumo.');return}
+  if(publishedForm){toast('Esta notícia já foi publicada. Altere o conteúdo para publicar outra.');return}
+  const btn=$('#btnPublishSite');btn.disabled=true;btn.textContent='A publicar…';
+  try{
+    let image_url=null;
+    if(imgFile){
+      const ext=((imgFile.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''))||'jpg';
+      const path=me.id+'/'+Date.now()+'.'+ext;
+      const up=await sb.storage.from('news-images').upload(path,imgFile,{contentType:imgFile.type,upsert:false});
+      if(up.error)throw up.error;
+      image_url=sb.storage.from('news-images').getPublicUrl(path).data.publicUrl;
+    }
+    const row={title:p.title,summary:p.summary,body:p.body||null,category:p.category||'Geral',source_name:p.source||null,source_url:p.link||null,image_url,status:'published',published_at:new Date().toISOString(),created_by:me.id};
+    const {data,error}=await sb.from('articles').insert(row).select('id').single();
+    if(error)throw error;
+    publishedForm=true;
+    log('share','Publicado no site: '+p.title);
+    const base=normUrl(settings.url).replace(/#.*$/,'');
+    if(base){F.link.value=base+'#noticia-'+data.id;onFormChange();publishedForm=true;toast('Publicado. O link da notícia no site já está nas partilhas.')}
+    else toast('Publicado no site. Defina o endereço do site em Definições para partilhar o link.');
+  }catch(e){toast('Não foi possível publicar: '+(e.message||'erro desconhecido'))}
+  finally{btn.disabled=false;btn.textContent='Publicar no site'}
+}
+$('#btnPublishSite').addEventListener('click',publishSite);
+
+async function pubUpdate(id,patch){
+  const {error}=await sb.from('articles').update(patch).eq('id',id);
+  if(error)toast('Erro: '+error.message);else loadPubs();
+}
+async function loadPubs(){
+  const box=$('#pubList');
+  if(!box||!sb||!me)return;
+  const {data,error}=await sb.from('articles').select('id,title,category,status,featured,published_at,created_at').order('created_at',{ascending:false}).limit(100);
+  if(error){box.innerHTML='<div class="empty">Não foi possível carregar: '+esc(error.message)+'</div>';return}
+  if(!data.length){box.innerHTML='<div class="empty">Ainda não publicou notícias. Crie um post e use Publicar no site.</div>';return}
+  box.innerHTML='';
+  data.forEach(a=>{
+    const live=a.status==='published';
+    const el=document.createElement('div');el.className='li';
+    el.innerHTML='<div class="t">'+esc(a.title)+'<span>'+esc(a.category)+' · '+fmtDate(a.published_at||a.created_at)+(a.featured?' · Em destaque':'')+'</span></div>'+
+      '<div class="acts"><span class="pill'+(live?' ok':'')+'">'+(live?'Publicada':'Rascunho')+'</span>'+
+      '<a class="btn sm" href="index.html#noticia-'+esc(a.id)+'" target="_blank" rel="noopener">Ver</a>'+
+      '<button class="btn sm" data-f>'+(a.featured?'Tirar destaque':'Destacar')+'</button>'+
+      '<button class="btn sm" data-s>'+(live?'Despublicar':'Publicar')+'</button>'+
+      '<button class="btn sm danger" data-d>Apagar</button></div>';
+    el.querySelector('[data-f]').onclick=()=>pubUpdate(a.id,{featured:!a.featured});
+    el.querySelector('[data-s]').onclick=()=>pubUpdate(a.id,live?{status:'draft'}:{status:'published',published_at:new Date().toISOString()});
+    const d=el.querySelector('[data-d]');let armed=false,t;
+    d.onclick=async()=>{
+      if(!armed){armed=true;d.textContent='Confirmar';clearTimeout(t);t=setTimeout(()=>{armed=false;d.textContent='Apagar'},3500);return}
+      const {error}=await sb.from('articles').delete().eq('id',a.id);
+      if(error)toast('Erro: '+error.message);else{toast('Notícia apagada.');loadPubs()}
+    };
+    box.appendChild(el);
+  });
+}
+
 /* ---------- Início ---------- */
 buildNetButtons();renderNews();renderQueue();refreshTop();
 loadPost({title:NEWS[0].t,summary:NEWS[0].s,category:NEWS[0].cat,source:settings.source},'sq','vermelho');
 renderTabs();
 go('inicio');
+initAuth();
 })();
 </script>
 </body>
