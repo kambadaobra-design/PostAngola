@@ -45,7 +45,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em}
 .brand-mark{width:34px;height:34px;border-radius:9px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:0;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
 .top-actions{display:flex;align-items:center;gap:8px;min-width:0}
-.link-chip{display:flex;align-items:center;gap:8px;max-width:280px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.link-chip{display:flex;align-items:center;gap:8px;height:38px;max-width:280px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .link-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
 .link-chip.empty .dot{background:var(--gold)}
 .icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center}
@@ -181,6 +181,14 @@ a.btn{color:inherit;text-decoration:none}
 #userName:empty{display:none}
 .logo-sym{display:none}
 @media (max-width:760px){.logo-full{display:none}.logo-sym{display:block}.brand svg{height:36px}.top-actions a.btn{display:none}.link-chip{max-width:130px}}
+.adrow{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-top:1px solid var(--border)}
+.adrow:first-child{border-top:0;padding-top:0}
+.adth{width:100%;height:auto;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);display:block}
+.adrow-b{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.adrow-b .t{min-width:0}
+.adrow-b .t span{display:block;color:var(--muted);font-size:12.5px;word-break:break-all}
+.adrow-b .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+@media (max-width:760px){.rail{overflow-x:auto;justify-content:flex-start}.nav{flex:0 0 auto;min-width:76px}}
 #gate{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
 .gate-box{max-width:420px}
 .gate-box h2{font-size:22px;margin-bottom:8px}
@@ -219,6 +227,7 @@ a.btn{color:inherit;text-decoration:none}
     <button class="nav" data-go="inicio"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3z"/></svg>Início</button>
     <button class="nav" data-go="criar"><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg>Criar post</button>
     <button class="nav" data-go="publicacoes"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>Publicações</button>
+    <button class="nav" data-go="publicidade"><svg viewBox="0 0 24 24"><path d="M3 10v4a1 1 0 0 0 1 1h3l6 4V5L7 9H4a1 1 0 0 0-1 1z"/><path d="M17 8.5a5 5 0 0 1 0 7"/></svg>Publicidade</button>
     <button class="nav" data-go="noticias"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Notícias</button>
     <button class="nav" data-go="automacao"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>Automação</button>
     <button class="nav" data-go="definicoes"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>Definições</button>
@@ -257,6 +266,7 @@ a.btn{color:inherit;text-decoration:none}
       <div class="page-head">
         <div><h1>Criar post</h1><p class="sub">A imagem e a legenda atualizam enquanto escreve. O endereço do site é adicionado automaticamente.</p></div>
       </div>
+      <div class="notice" id="editBar" hidden style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px"><span><b>A editar uma notícia já publicada.</b> As alterações só ficam no site quando clicar em Guardar alterações.</span><button class="btn sm" id="editCancel" type="button">Cancelar edição</button></div>
       <div class="studio">
         <div>
           <div class="card">
@@ -264,7 +274,7 @@ a.btn{color:inherit;text-decoration:none}
             <div class="field"><label class="f" for="fResumo">Resumo</label><textarea id="fResumo" maxlength="280"></textarea><div class="hint"><span id="resumoCount">0</span>/280 caracteres</div></div>
             <div class="field"><label class="f" for="fBody">Texto completo (opcional)</label><textarea id="fBody" rows="6" placeholder="Separe os parágrafos com uma linha em branco."></textarea></div>
             <div class="row2">
-              <div class="field"><label class="f" for="fCategoria">Categoria</label><input type="text" id="fCategoria" list="cats" autocomplete="off"><datalist id="cats"></datalist></div>
+              <div class="field"><label class="f" for="fCategoria">Categoria</label><select id="fCategoria"></select></div>
               <div class="field"><label class="f" for="fFonte">Fonte</label><input type="text" id="fFonte" placeholder="Ex.: nome do jornal" autocomplete="off"></div>
             </div>
             <div class="field"><label class="f" for="fLink">Link da fonte original (opcional)</label><input type="url" id="fLink" placeholder="https://..." autocomplete="off"><div class="hint">Depois de publicar no site, este campo passa a ter o link da notícia no PostAngola, para usar nas partilhas.</div></div>
@@ -362,8 +372,27 @@ a.btn{color:inherit;text-decoration:none}
 
     <!-- PUBLICAÇÕES -->
     <section class="view" id="v-publicacoes" hidden>
-      <div class="page-head"><div><h1>Publicações</h1><p class="sub">Notícias publicadas no site. Pode destacar, despublicar ou apagar.</p></div><a class="btn" href="index.html" target="_blank" rel="noopener">Abrir o site</a></div>
+      <div class="page-head"><div><h1>Publicações</h1><p class="sub">Notícias do site. Pode editar, destacar, despublicar ou apagar.</p></div><a class="btn" href="index.html" target="_blank" rel="noopener">Abrir o site</a></div>
       <div class="card"><div class="list" id="pubList"><div class="empty">A carregar…</div></div></div>
+    </section>
+
+    <!-- PUBLICIDADE -->
+    <section class="view" id="v-publicidade" hidden>
+      <div class="page-head"><div><h1>Publicidade</h1><p class="sub">Banner discreto no topo da capa, com até 5 anúncios ativos que rodam sozinhos. Os visitantes veem a etiqueta "Publicidade".</p></div></div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-head"><h2>Novo anúncio</h2></div>
+          <div class="field"><label class="f" for="adSponsor">Patrocinador ou anunciante</label><input type="text" id="adSponsor" maxlength="80" autocomplete="off"></div>
+          <div class="field"><label class="f" for="adLink">Link ao clicar (opcional)</label><input type="url" id="adLink" placeholder="https://..." autocomplete="off"></div>
+          <div class="field"><label class="f" for="adImg">Imagem para computador</label><input type="file" id="adImg" accept="image/*"><div class="hint">Tamanho ideal: 970 × 90 px (ou 1940 × 180 px para ficar nítida). Até 2 MB.</div></div>
+          <div class="field"><label class="f" for="adImgM">Imagem para telemóvel (opcional)</label><input type="file" id="adImgM" accept="image/*"><div class="hint">Tamanho ideal: 640 × 200 px. Se não enviar, usa-se a do computador, cortada ao centro.</div></div>
+          <button class="btn primary" id="adAdd" type="button">Adicionar anúncio</button>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Anúncios</h2><span class="pill" id="adCount"></span></div>
+          <div id="adList"><div class="empty">A carregar…</div></div>
+        </div>
+      </div>
     </section>
 
     <!-- DEFINIÇÕES -->
@@ -419,9 +448,11 @@ const NEWS=[
  {cat:'Energia',t:'Projetos de energia solar levam eletricidade a comunidades rurais',s:'Painéis solares e mini-redes começam a alimentar escolas, centros de saúde e pequenos comércios.'},
  {cat:'Tecnologia',t:'Jovens programadores criam aplicações para resolver problemas locais',s:'Equipas angolanas desenvolvem soluções para transporte, saúde e serviços públicos.'},
  {cat:'Desporto',t:'Clubes investem na formação de jovens atletas',s:'Academias e escolas desportivas procuram talentos e reforçam o acompanhamento técnico.'},
- {cat:'Cultura',t:'Festivais de música e dança atraem público de todo o país',s:'Artistas locais mostram novos trabalhos e ajudam a movimentar a economia criativa.'}
+ {cat:'Cultura',t:'Festivais de música e dança atraem público de todo o país',s:'Artistas locais mostram novos trabalhos e ajudam a movimentar a economia criativa.'},
+ {cat:'Sociedade',t:'Associações de bairro organizam campanhas de limpeza e apoio a famílias',s:'Voluntários e moradores juntam esforços para melhorar o espaço público e apoiar quem mais precisa.'},
+ {cat:'Política',t:'Debate sobre transparência ganha espaço nas redes sociais',s:'Cidadãos e organizações pedem informação clara sobre decisões que afetam o dia a dia.'}
 ];
-const CATS=[...new Set(NEWS.map(n=>n.cat))];
+const CATS=['Sociedade','Economia','Política','Educação','Tecnologia','Energia','Desporto','Cultura'];
 const FORMATS={
   sq:{w:1080,h:1080,hint:'Quadrado 1:1. Bom para Instagram, Facebook e LinkedIn.'},
   pt:{w:1080,h:1350,hint:'Retrato 4:5. Ocupa mais espaço no feed do Instagram e do Facebook.'},
@@ -452,7 +483,7 @@ const CAP_TABS=['whatsapp','facebook','linkedin','x','instagram','tiktok','youtu
 let settings=Object.assign({brand:'PostAngola',url:'',tags:'#Angola #PostAngola',source:''},store.get('settings',{}));
 let drafts=store.get('drafts',[]);
 let activity=store.get('activity',[]);
-let fmt='sq',theme='vermelho',img=null,imgFile=null,curTab='whatsapp';
+let fmt='sq',theme='vermelho',img=null,imgFile=null,editingId=null,editingImage=null,curTab='whatsapp';
 const edited={};
 let queue=[];
 
@@ -478,6 +509,7 @@ function go(view){
   if(view==='criar'){draw();refreshCaptions()}
   if(view==='definicoes')fillSettings();
   if(view==='publicacoes')loadPubs();
+  if(view==='publicidade')loadAdsAdmin();
 }
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)go(b.getAttribute('data-go'))});
 
@@ -522,10 +554,14 @@ function renderDash(){
 
 /* ---------- Formulário ---------- */
 const F={titulo:$('#fTitulo'),resumo:$('#fResumo'),body:$('#fBody'),cat:$('#fCategoria'),fonte:$('#fFonte'),link:$('#fLink'),tags:$('#fTags')};
-$('#cats').innerHTML=CATS.map(c=>'<option value="'+esc(c)+'">').join('');
+F.cat.innerHTML='<option value="">Escolha a categoria</option>'+CATS.map(c=>'<option value="'+esc(c)+'">'+esc(c)+'</option>').join('');
 function readPost(){return{title:F.titulo.value.trim(),summary:F.resumo.value.trim(),body:F.body.value.trim(),category:F.cat.value.trim(),source:F.fonte.value.trim(),link:normUrl(F.link.value),tags:F.tags.value.trim()}}
+function setCat(v){
+  if(v&&!Array.from(F.cat.options).some(o=>o.value===v)){const o=document.createElement('option');o.value=v;o.textContent=v;F.cat.appendChild(o)}
+  F.cat.value=v||'';
+}
 function loadPost(p,f,t){
-  F.titulo.value=p.title||'';F.resumo.value=p.summary||'';F.body.value=p.body||'';F.cat.value=p.category||'';
+  F.titulo.value=p.title||'';F.resumo.value=p.summary||'';F.body.value=p.body||'';setCat(p.category||'');
   F.fonte.value=p.source!==undefined&&p.source!==''?p.source:(settings.source||'');
   F.link.value=p.link||'';F.tags.value=p.tags||settings.tags||'';
   if(f)setRadio('fmt',f);if(t)setRadio('theme',t);
@@ -551,7 +587,7 @@ $('#fImg').addEventListener('change',e=>{
   rd.onload=()=>{const im=new Image();im.onload=()=>{img=im;imgFile=f;$('#imgHint').textContent='Imagem: '+f.name;$('#imgClear').hidden=false;schedDraw()};im.onerror=()=>toast('Não foi possível ler esta imagem.');im.src=rd.result};
   rd.readAsDataURL(f);
 });
-$('#imgClear').addEventListener('click',()=>{img=null;imgFile=null;$('#fImg').value='';$('#imgHint').textContent='Sem imagem, o post usa um fundo de cor.';$('#imgClear').hidden=true;schedDraw()});
+$('#imgClear').addEventListener('click',()=>{img=null;imgFile=null;editingImage=null;$('#fImg').value='';$('#imgHint').textContent='Sem imagem, o post usa um fundo de cor.';$('#imgClear').hidden=true;schedDraw()});
 
 /* ---------- Canvas ---------- */
 const cv=$('#cv'),ctx=cv.getContext('2d');
@@ -831,14 +867,17 @@ async function initAuth(){
 $('#btnSignOut').addEventListener('click',async()=>{if(sb)await sb.auth.signOut();location.href='index.html'});
 Object.values(F).forEach(el=>el.addEventListener('input',()=>{publishedForm=false}));
 
+function setPublishLabel(){$('#btnPublishSite').textContent=editingId?'Guardar alterações':'Publicar no site';$('#editBar').hidden=!editingId}
 async function publishSite(){
   if(!sb||!me){toast('Inicie sessão como editor.');return}
   const p=readPost();
   if(!p.title||!p.summary){toast('Preencha o título e o resumo.');return}
-  if(publishedForm){toast('Esta notícia já foi publicada. Altere o conteúdo para publicar outra.');return}
-  const btn=$('#btnPublishSite');btn.disabled=true;btn.textContent='A publicar…';
+  if(!p.category){toast('Escolha uma categoria.');return}
+  const editing=editingId;
+  if(publishedForm&&!editing){toast('Esta notícia já foi publicada. Altere o conteúdo para publicar outra, ou edite-a em Publicações.');return}
+  const btn=$('#btnPublishSite');btn.disabled=true;btn.textContent='A guardar…';
   try{
-    let image_url=null;
+    let image_url=editing?editingImage:null;
     if(imgFile){
       const ext=((imgFile.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''))||'jpg';
       const path=me.id+'/'+Date.now()+'.'+ext;
@@ -846,17 +885,50 @@ async function publishSite(){
       if(up.error)throw up.error;
       image_url=sb.storage.from('news-images').getPublicUrl(path).data.publicUrl;
     }
-    const row={title:p.title,summary:p.summary,body:p.body||null,category:p.category||'Geral',source_name:p.source||null,source_url:p.link||null,image_url,status:'published',published_at:new Date().toISOString(),created_by:me.id};
-    const {data,error}=await sb.from('articles').insert(row).select('id').single();
-    if(error)throw error;
-    publishedForm=true;
-    log('share','Publicado no site: '+p.title);
+    const fields={title:p.title,summary:p.summary,body:p.body||null,category:p.category,source_name:p.source||null,source_url:p.link||null,image_url};
+    let id=editing;
+    if(editing){
+      const {data,error}=await sb.from('articles').update(fields).eq('id',editing).select('id');
+      if(error)throw error;
+      if(!data||!data.length)throw new Error('sem permissão ou notícia não encontrada');
+    }else{
+      const {data,error}=await sb.from('articles').insert(Object.assign({},fields,{status:'published',published_at:new Date().toISOString(),created_by:me.id})).select('id').single();
+      if(error)throw error;
+      id=data.id;
+    }
+    editingId=null;editingImage=null;imgFile=null;$('#fImg').value='';
+    log('share',(editing?'Notícia editada: ':'Publicado no site: ')+p.title);
     const base=normUrl(settings.url).replace(/#.*$/,'');
-    if(base){F.link.value=base+'#noticia-'+data.id;onFormChange();publishedForm=true;toast('Publicado. O link da notícia no site já está nas partilhas.')}
-    else toast('Publicado no site. Defina o endereço do site em Definições para partilhar o link.');
-  }catch(e){toast('Não foi possível publicar: '+(e.message||'erro desconhecido'))}
-  finally{btn.disabled=false;btn.textContent='Publicar no site'}
+    if(base){F.link.value=base+'#noticia-'+id;onFormChange();toast(editing?'Alterações guardadas. O link da notícia no site está nas partilhas.':'Publicado. O link da notícia no site já está nas partilhas.')}
+    else toast(editing?'Alterações guardadas no site.':'Publicado no site. Defina o endereço do site em Definições para partilhar o link.');
+    publishedForm=true;
+    loadPubs();
+  }catch(e){toast('Não foi possível guardar: '+(e.message||'erro desconhecido'))}
+  finally{btn.disabled=false;setPublishLabel()}
 }
+async function startEdit(id){
+  if(!sb||!me)return;
+  const {data:a,error}=await sb.from('articles').select('*').eq('id',id).single();
+  if(error||!a){toast('Não foi possível abrir a notícia.');return}
+  editingId=a.id;editingImage=a.image_url||null;img=null;imgFile=null;$('#fImg').value='';$('#imgClear').hidden=true;
+  $('#imgHint').textContent=a.image_url?'Esta notícia tem imagem. Carregue outra para a substituir.':'Sem imagem, o post usa um fundo de cor.';
+  loadPost({title:a.title||'',summary:a.summary||'',body:a.body||'',category:a.category||'',source:'x',link:a.source_url||''});
+  F.fonte.value=a.source_name||'';
+  publishedForm=false;onFormChange();
+  if(a.image_url){
+    const im=new Image();im.crossOrigin='anonymous';
+    im.onload=()=>{if(editingId!==a.id)return;img=im;$('#imgClear').hidden=false;$('#imgHint').textContent='Imagem atual da notícia. Carregue outra para a substituir.';schedDraw()};
+    im.src=a.image_url;
+  }
+  setPublishLabel();go('criar');
+}
+function cancelEdit(){
+  editingId=null;editingImage=null;img=null;imgFile=null;$('#fImg').value='';$('#imgClear').hidden=true;
+  $('#imgHint').textContent='Sem imagem, o post usa um fundo de cor.';
+  loadPost({title:'',summary:'',body:'',category:'',source:'x',link:''});F.fonte.value='';
+  publishedForm=false;onFormChange();setPublishLabel();go('publicacoes');
+}
+$('#editCancel').addEventListener('click',cancelEdit);
 $('#btnPublishSite').addEventListener('click',publishSite);
 
 async function pubUpdate(id,patch){
@@ -876,9 +948,11 @@ async function loadPubs(){
     el.innerHTML='<div class="t">'+esc(a.title)+'<span>'+esc(a.category)+' · '+fmtDate(a.published_at||a.created_at)+(a.featured?' · Em destaque':'')+'</span></div>'+
       '<div class="acts"><span class="pill'+(live?' ok':'')+'">'+(live?'Publicada':'Rascunho')+'</span>'+
       '<a class="btn sm" href="index.html#noticia-'+esc(a.id)+'" target="_blank" rel="noopener">Ver</a>'+
+      '<button class="btn sm" data-e>Editar</button>'+
       '<button class="btn sm" data-f>'+(a.featured?'Tirar destaque':'Destacar')+'</button>'+
       '<button class="btn sm" data-s>'+(live?'Despublicar':'Publicar')+'</button>'+
       '<button class="btn sm danger" data-d>Apagar</button></div>';
+    el.querySelector('[data-e]').onclick=()=>startEdit(a.id);
     el.querySelector('[data-f]').onclick=()=>pubUpdate(a.id,{featured:!a.featured});
     el.querySelector('[data-s]').onclick=()=>pubUpdate(a.id,live?{status:'draft'}:{status:'published',published_at:new Date().toISOString()});
     const d=el.querySelector('[data-d]');let armed=false,t;
@@ -890,6 +964,89 @@ async function loadPubs(){
     box.appendChild(el);
   });
 }
+
+/* ---------- Publicidade (gestão) ---------- */
+let adRows=[];
+const AD_MAX=5;
+function extOf(f){return ((f.name.split('.').pop()||'jpg').toLowerCase().replace(/[^a-z0-9]/g,''))||'jpg'}
+async function uploadAd(file,tag){
+  const path='ads/'+Date.now()+'-'+tag+'.'+extOf(file);
+  const up=await sb.storage.from('news-images').upload(path,file,{contentType:file.type,upsert:false});
+  if(up.error)throw up.error;
+  return sb.storage.from('news-images').getPublicUrl(path).data.publicUrl;
+}
+function storagePath(url){const m=(url||'').match(/\/news-images\/(.+)$/);return m?decodeURIComponent(m[1]):null}
+function checkRatio(f,min,max,rec){
+  if(!f)return;
+  const u=URL.createObjectURL(f),im=new Image();
+  im.onload=()=>{const r=im.width/im.height;if(r<min||r>max)toast('Dica: a proporção ideal é '+rec+' px. Esta imagem pode ficar cortada.');URL.revokeObjectURL(u)};
+  im.src=u;
+}
+$('#adImg').addEventListener('change',e=>checkRatio(e.target.files[0],8,14,'970 × 90'));
+$('#adImgM').addEventListener('change',e=>checkRatio(e.target.files[0],2.6,4,'640 × 200'));
+
+async function loadAdsAdmin(){
+  const box=$('#adList');
+  if(!box||!sb||!me)return;
+  const {data,error}=await sb.from('ads').select('*').order('sort_order',{ascending:true}).order('created_at',{ascending:false});
+  if(error){box.innerHTML='<div class="empty">Não foi possível carregar: '+esc(error.message)+'<br>Já correu o SQL da publicidade no Supabase?</div>';return}
+  adRows=data||[];
+  const act=adRows.filter(a=>a.active).length;
+  const pc=$('#adCount');pc.textContent=act+' ativo(s)';pc.className='pill'+(act>AD_MAX?' warn':' ok');
+  if(!adRows.length){box.innerHTML='<div class="empty">Ainda não há anúncios. Adicione o primeiro ao lado.</div>';return}
+  box.innerHTML=act>AD_MAX?'<div class="notice" style="margin-bottom:12px">Só os 5 primeiros anúncios ativos aparecem na capa. Desative alguns.</div>':'';
+  adRows.forEach((a,i)=>{
+    const el=document.createElement('div');el.className='adrow';
+    el.innerHTML='<img class="adth" src="'+esc(a.image_url)+'" alt="">'+
+      '<div class="adrow-b"><div class="t"><b>'+esc(a.sponsor)+'</b><span>'+(a.link_url?esc(a.link_url):'Sem link')+(a.image_mobile_url?' · com imagem de telemóvel':'')+'</span></div>'+
+      '<div class="acts"><span class="pill'+(a.active?' ok':'')+'">'+(a.active?'Ativo':'Inativo')+'</span>'+
+      '<button class="btn sm" data-up'+(i===0?' disabled':'')+'>Subir</button>'+
+      '<button class="btn sm" data-down'+(i===adRows.length-1?' disabled':'')+'>Descer</button>'+
+      '<button class="btn sm" data-t>'+(a.active?'Desativar':'Ativar')+'</button>'+
+      '<button class="btn sm danger" data-d>Apagar</button></div></div>';
+    el.querySelector('[data-up]').onclick=()=>moveAd(i,-1);
+    el.querySelector('[data-down]').onclick=()=>moveAd(i,1);
+    el.querySelector('[data-t]').onclick=async()=>{const {error}=await sb.from('ads').update({active:!a.active}).eq('id',a.id);if(error)toast('Erro: '+error.message);loadAdsAdmin()};
+    const d=el.querySelector('[data-d]');let armed=false,t;
+    d.onclick=async()=>{
+      if(!armed){armed=true;d.textContent='Confirmar';clearTimeout(t);t=setTimeout(()=>{armed=false;d.textContent='Apagar'},3500);return}
+      const {error}=await sb.from('ads').delete().eq('id',a.id);
+      if(error){toast('Erro: '+error.message);return}
+      const paths=[storagePath(a.image_url),storagePath(a.image_mobile_url)].filter(Boolean);
+      if(paths.length)sb.storage.from('news-images').remove(paths).catch(()=>{});
+      toast('Anúncio apagado.');loadAdsAdmin();
+    };
+    box.appendChild(el);
+  });
+}
+async function moveAd(i,dir){
+  const j=i+dir;if(j<0||j>=adRows.length)return;
+  const arr=adRows.slice();[arr[i],arr[j]]=[arr[j],arr[i]];
+  const res=await Promise.all(arr.map((a,k)=>sb.from('ads').update({sort_order:k}).eq('id',a.id)));
+  const bad=res.find(r=>r.error);if(bad)toast('Erro: '+bad.error.message);
+  loadAdsAdmin();
+}
+async function addAd(){
+  if(!sb||!me){toast('Inicie sessão como editor.');return}
+  const sponsor=$('#adSponsor').value.trim(),file=$('#adImg').files[0],fileM=$('#adImgM').files[0];
+  const rawLink=$('#adLink').value.trim(),link=normUrl(rawLink);
+  if(!sponsor){toast('Escreva o nome do patrocinador.');return}
+  if(!file){toast('Escolha a imagem do banner.');return}
+  if(rawLink&&!link){toast('O link não parece válido.');return}
+  if(file.size>2*1024*1024||(fileM&&fileM.size>2*1024*1024)){toast('Cada imagem pode ter até 2 MB.');return}
+  const btn=$('#adAdd');btn.disabled=true;btn.textContent='A adicionar…';
+  try{
+    const image_url=await uploadAd(file,'d');
+    const image_mobile_url=fileM?await uploadAd(fileM,'m'):null;
+    const sort_order=adRows.length?Math.max(...adRows.map(a=>a.sort_order||0))+1:0;
+    const {error}=await sb.from('ads').insert({sponsor,image_url,image_mobile_url,link_url:link||null,active:true,sort_order});
+    if(error)throw error;
+    ['#adSponsor','#adLink','#adImg','#adImgM'].forEach(s=>{$(s).value=''});
+    toast('Anúncio adicionado. Já aparece na capa.');loadAdsAdmin();
+  }catch(e){toast('Não foi possível adicionar: '+(e.message||'erro desconhecido'))}
+  finally{btn.disabled=false;btn.textContent='Adicionar anúncio'}
+}
+$('#adAdd').addEventListener('click',addAd);
 
 /* ---------- Início ---------- */
 buildNetButtons();renderNews();renderQueue();refreshTop();

@@ -168,11 +168,90 @@ dialog::backdrop{background:rgba(10,10,10,.65)}
 footer a{color:#c9c9c9;text-decoration:underline;text-underline-offset:3px}
 footer a:hover{color:#fff}
 @media (max-width:560px){.logo svg{height:44px}}
+
+/* ---- Banner de publicidade ---- */
+.adband{background:var(--soft);border-bottom:1px solid var(--line);padding:10px 0}
+.ad{position:relative;width:100%;max-width:970px;margin:0 auto;aspect-ratio:970/90;border-radius:4px;overflow:hidden;background:#e7e7e3}
+.slide{position:absolute;inset:0;display:block;opacity:0;visibility:hidden;transition:opacity .6s,visibility 0s .6s}
+.slide.on{opacity:1;visibility:visible;z-index:1;transition:opacity .6s,visibility 0s}
+.slide picture{display:block;width:100%;height:100%}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide.house{display:flex;align-items:center;justify-content:center;gap:10px;text-align:center;padding:0 16px;font-size:13px;color:#555;background:repeating-linear-gradient(135deg,#f1f0ed 0 12px,#e9e8e4 12px 24px)}
+.slide.house b{color:#222}
+.ad-tag{position:absolute;left:0;top:0;z-index:3;background:rgba(0,0,0,.55);color:#fff;font-size:10px;line-height:1;padding:3px 7px;border-bottom-right-radius:4px}
+.ad-dots{position:absolute;right:8px;bottom:6px;z-index:3;display:flex;gap:5px}
+.ad-dots button{width:7px;height:7px;padding:0;border-radius:50%;border:1px solid rgba(0,0,0,.35);background:rgba(255,255,255,.6);cursor:pointer}
+.ad-dots button[aria-current="true"]{background:#fff;transform:scale(1.25)}
+
+/* ---- Barra móvel e menu lateral ---- */
+.mbar{display:none;position:sticky;top:0;z-index:40;align-items:center;justify-content:space-between;gap:8px;height:58px;padding:0 10px;background:rgba(255,255,255,.94);-webkit-backdrop-filter:saturate(1.4) blur(10px);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.mbar .logo{flex:1;display:flex;justify-content:center}
+.mbar .logo svg{height:30px}
+#mAuth{min-width:44px;display:flex;justify-content:flex-end}
+.icon{width:44px;height:44px;border-radius:12px;border:0;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+.icon:hover,.icon:active{background:var(--soft)}
+.avatar{width:38px;height:38px;border-radius:50%;background:var(--red);color:#fff;font-weight:800;border:0;cursor:pointer;display:inline-grid;place-items:center;flex:none}
+.enter{background:none;border:0;color:var(--red);font-weight:800;font-size:14px;padding:10px 8px;cursor:pointer}
+.scrim{position:fixed;inset:0;z-index:80;background:rgba(10,10,10,.5);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;visibility:hidden;transition:opacity .25s,visibility 0s .25s}
+.scrim.show{opacity:1;visibility:visible;transition:opacity .25s,visibility 0s}
+.drawer{position:fixed;top:0;bottom:0;left:0;z-index:90;width:min(86vw,340px);background:#fff;display:flex;flex-direction:column;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom,0px);transform:translateX(-104%);visibility:hidden;box-shadow:12px 0 40px rgba(0,0,0,.25);transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s .32s}
+.drawer.open{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.d-head{display:flex;align-items:center;justify-content:space-between;padding:12px 8px 12px 18px;border-bottom:1px solid var(--line)}
+.d-head svg{height:30px;width:auto;display:block}
+.d-acct{padding:18px;background:var(--soft);border-bottom:1px solid var(--line)}
+.d-hi{font-size:14px;color:var(--muted);margin-bottom:12px}
+.d-user{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.d-user b{display:block;font-size:16px}
+.d-user .role{color:#2A1D00;margin:2px 0 0;display:inline-block}
+.d-btns{display:flex;gap:8px;flex-wrap:wrap}
+.d-btns .cta,.d-btns .btn2{flex:1;justify-content:center;padding:11px 14px;font-size:14px}
+.d-label{font-weight:700;font-size:13px;color:var(--muted);padding:18px 20px 6px}
+.d-cats button{display:flex;align-items:center;width:100%;padding:13px 20px 13px 16px;font-size:19px;font-weight:700;background:none;border:0;border-left:4px solid transparent;text-align:left;cursor:pointer}
+.d-cats button:hover{background:var(--soft)}
+.d-cats button[aria-pressed="true"]{border-left-color:var(--red);color:var(--red);background:var(--soft)}
+.d-foot{margin-top:auto;padding:16px 20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px;font-size:14px}
+.d-foot a{color:var(--muted)}
+body.lock{overflow:hidden}
+.thumb img{object-position:center 30%}
+.thumb img.bg{display:none}
+.r-img.has{aspect-ratio:auto;background:#111}
+.r-img.has img{height:auto;max-height:62vh;object-fit:contain}
+
+@media (max-width:820px){
+  .util,.mast,.cats{display:none}
+  .mbar{display:flex}
+}
+@media (max-width:600px){
+  .ad{aspect-ratio:16/5}
+  .adband{padding:8px 0}
+}
+@media (max-width:700px){
+  main{padding-top:18px}
+  .lead{min-height:0;background:none!important;color:var(--ink);border-radius:0;overflow:visible}
+  .lead .thumb{position:relative;inset:auto;aspect-ratio:4/3;border-radius:10px;overflow:hidden}
+  .lead .thumb img.bg,.card .thumb img.bg{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.85) saturate(1.2);transform:scale(1.2)}
+  .lead .thumb img.fg,.card .thumb img.fg{position:relative;z-index:1;object-fit:contain;object-position:center}
+  .card .thumb{aspect-ratio:4/3}
+  .lead .shade{display:none}
+  .lead-text{position:static;padding:14px 0 0}
+  .lead h2{font-size:28px;max-width:none;margin:8px 0}
+  .lead p{color:var(--muted);font-size:15px}
+  .lead .meta{color:var(--muted)}
+  .lead:hover h2{text-decoration:none}
+  #readDlg{inset:0;margin:0;width:100%;max-width:100%;height:100%;max-height:100%;border-radius:0}
+}
+@media (prefers-reduced-motion: reduce){.slide,.slide.on,.drawer,.scrim{transition:none!important}}
 </style>
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
 <body>
+
+<div class="mbar" id="mbar">
+  <button class="icon" id="hamBtn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M4 7h16M4 12h10M4 17h16"/></svg></button>
+  <a class="logo" id="mLogo" href="index.html" aria-label="PostAngola, página inicial"></a>
+  <div id="mAuth"></div>
+</div>
 
 <div class="util">
   <div class="wrap">
@@ -180,6 +259,16 @@ footer a:hover{color:#fff}
     <div id="authBox"></div>
   </div>
 </div>
+
+<section class="adband" id="adband" aria-label="Publicidade" hidden>
+  <div class="wrap">
+    <div class="ad" id="ad">
+      <div id="adTrack"></div>
+      <span class="ad-tag">Publicidade</span>
+      <div class="ad-dots" id="adDots"></div>
+    </div>
+  </div>
+</section>
 
 <header class="mast">
   <div class="wrap">
@@ -217,6 +306,15 @@ footer a:hover{color:#fff}
   </div>
 </footer>
 
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Menu">
+  <div class="d-head"><div id="dLogo"></div><button class="icon" id="dClose" type="button" aria-label="Fechar menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+  <div class="d-acct" id="dAcct"></div>
+  <div class="d-label">Categorias</div>
+  <nav class="d-cats" id="dCats" aria-label="Categorias"></nav>
+  <div class="d-foot"><a href="#sobre">Sobre o PostAngola</a><a href="PostAngola.html">Área de editores</a></div>
+</aside>
+
 <dialog id="readDlg" aria-label="Notícia"><button class="r-close" id="rClose" aria-label="Fechar">×</button><div id="readBody"></div></dialog>
 
 <dialog id="authDlg" aria-label="Entrar ou criar conta">
@@ -242,8 +340,8 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const enc=encodeURIComponent;
 function safeUrl(u){try{const x=new URL(u);return (x.protocol==='https:'||x.protocol==='http:')?x.href:''}catch(e){return ''}}
 
-const CATS=['Economia','Política','Sociedade','Educação','Energia','Tecnologia','Desporto','Cultura','Diáspora'];
-const GRAD={Economia:['#0B6E4F','#063B2A'],'Política':['#1F3A93','#101F52'],Sociedade:['#8A4B08','#4A2704'],'Educação':['#6B2FA0','#381456'],Energia:['#C77700','#6E4000'],Tecnologia:['#0A6C8F','#043A4D'],Desporto:['#C8102E','#6E0819'],Cultura:['#A3195B','#58092F'],'Diáspora':['#2A2A2A','#000000']};
+const CATS=['Sociedade','Economia','Política','Educação','Tecnologia','Energia','Desporto','Cultura'];
+const GRAD={Economia:['#0B6E4F','#063B2A'],'Política':['#1F3A93','#101F52'],Sociedade:['#8A4B08','#4A2704'],'Educação':['#6B2FA0','#381456'],Energia:['#C77700','#6E4000'],Tecnologia:['#0A6C8F','#043A4D'],Desporto:['#C8102E','#6E0819'],Cultura:['#A3195B','#58092F']};
 const grad=c=>{const g=GRAD[c]||['#555','#222'];return 'background:linear-gradient(135deg,'+g[0]+','+g[1]+')'};
 
 const CFG=window.PA_CONFIG||{};
@@ -266,7 +364,8 @@ $('#today').textContent=new Date().toLocaleDateString('pt-PT',{weekday:'long',da
 $('#year').textContent=new Date().getFullYear();
 
 /* ---------- Blocos de HTML ---------- */
-const imgTag=a=>{const u=safeUrl(a.image_url);return u?'<img src="'+esc(u)+'" alt="" loading="lazy" onerror="this.remove()">':''};
+const imgTagR=a=>{const u=safeUrl(a.image_url);return u?'<img src="'+esc(u)+'" alt="" onerror="this.parentNode.classList.remove(\'has\');this.remove()">':''};
+const imgTag=a=>{const u=safeUrl(a.image_url);return u?'<img class="bg" src="'+esc(u)+'" alt="" aria-hidden="true" loading="lazy" onerror="this.remove()"><img class="fg" src="'+esc(u)+'" alt="" loading="lazy" onerror="this.remove()">':''};
 const metaOf=a=>(a.source_name?esc(a.source_name)+' · ':'')+esc(ago(a.published_at||a.created_at));
 const href=a=>'#noticia-'+a.id;
 function leadHTML(a){
@@ -284,7 +383,8 @@ function cardHTML(a){
 function renderNav(){
   const nav=$('#catNav');
   const extra=[...new Set(articles.map(a=>a.category))].filter(c=>!CATS.includes(c));
-  nav.innerHTML=['Todas',...CATS,...extra].map(c=>'<button type="button" data-cat="'+esc(c)+'" aria-pressed="'+(c===filter)+'">'+esc(c)+'</button>').join('');
+  const html=['Todas',...CATS,...extra].map(c=>'<button type="button" data-cat="'+esc(c)+'" aria-pressed="'+(c===filter)+'">'+esc(c)+'</button>').join('');
+  nav.innerHTML=html;$('#dCats').innerHTML=html;
 }
 function renderFeed(){
   renderNav();
@@ -311,7 +411,9 @@ function renderFeed(){
   }
   box.innerHTML=h;
 }
-$('#catNav').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;filter=b.getAttribute('data-cat');shown=9;renderFeed();window.scrollTo({top:0})});
+function pickCat(c){filter=c;shown=9;renderFeed();window.scrollTo({top:0})}
+$('#catNav').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(b)pickCat(b.getAttribute('data-cat'))});
+$('#dCats').addEventListener('click',e=>{const b=e.target.closest('[data-cat]');if(!b)return;closeDrawer();pickCat(b.getAttribute('data-cat'))});
 $('#content').addEventListener('click',e=>{if(e.target.id==='moreBtn'){shown+=9;renderFeed()}});
 
 async function loadArticles(){
@@ -333,7 +435,7 @@ function openFromHash(){
   const src=safeUrl(a.source_url);
   const paras=(a.body||'').split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
   $('#readBody').innerHTML=
-    '<div class="r-img" style="'+grad(a.category)+'">'+imgTag(a)+'</div><div class="r-body"><span class="tag">'+esc(a.category)+'</span><h2>'+esc(a.title)+'</h2><span class="meta">'+metaOf(a)+'</span>'+
+    '<div class="r-img'+(safeUrl(a.image_url)?' has':'')+'" style="'+grad(a.category)+'">'+imgTagR(a)+'</div><div class="r-body"><span class="tag">'+esc(a.category)+'</span><h2>'+esc(a.title)+'</h2><span class="meta">'+metaOf(a)+'</span>'+
     (a.summary?'<p class="r-lead">'+esc(a.summary)+'</p>':'')+
     (paras.length?'<div class="r-text">'+paras.map(p=>'<p>'+esc(p)+'</p>').join('')+'</div>':'')+
     '<div class="r-src"><b>Fonte:</b> '+esc(a.source_name||'PostAngola')+(src?' · <a href="'+esc(src)+'" target="_blank" rel="noopener noreferrer" style="color:var(--red);font-weight:700">Ler no original</a>':'')+'</div>'+
@@ -352,7 +454,20 @@ readDlg.addEventListener('close',()=>{if(location.hash)history.replaceState(null
 
 /* ---------- Autenticação ---------- */
 const authDlg=$('#authDlg');let mode='in';
+function renderMobileAuth(){
+  const m=$('#mAuth'),d=$('#dAcct');
+  if(!user){
+    m.innerHTML='<button class="enter" type="button" data-act="in">Entrar</button>';
+    d.innerHTML='<p class="d-hi">Entre na sua conta ou crie uma para ter acesso às ferramentas do PostAngola.</p><div class="d-btns"><button class="cta" type="button" data-act="up">Criar conta</button><button class="btn2" type="button" data-act="in">Entrar</button></div>';
+    return;
+  }
+  const name=(profile&&profile.full_name)||user.email||'Leitor';
+  const ini=(name.trim().charAt(0)||'?').toUpperCase();
+  m.innerHTML='<button class="avatar" type="button" id="mAvatar" aria-label="Abrir menu da conta">'+esc(ini)+'</button>';
+  d.innerHTML='<div class="d-user"><span class="avatar">'+esc(ini)+'</span><div><b>'+esc(name)+'</b>'+(isEditor()?'<span class="role">'+(profile.role==='admin'?'Admin':'Editor')+'</span>':'')+'</div></div><div class="d-btns">'+(isEditor()?'<a class="cta" href="PostAngola.html">Painel PostAngola</a>':'')+'<button class="btn2" type="button" data-act="out">Sair</button></div>';
+}
 function renderAuth(){
+  renderMobileAuth();
   const box=$('#authBox');
   if(!user){box.innerHTML='<button class="lnk" type="button" data-act="in">Entrar</button><button class="cta" type="button" data-act="up">Criar conta</button>';return}
   const name=(profile&&profile.full_name)||user.email||'Leitor';
@@ -361,12 +476,78 @@ function renderAuth(){
   h+='<button class="lnk" type="button" data-act="out">Sair</button>';
   box.innerHTML=h;
 }
-$('#authBox').addEventListener('click',async e=>{
+async function authClick(e){
   const b=e.target.closest('[data-act]');if(!b)return;
   const act=b.getAttribute('data-act');
+  closeDrawer();
   if(act==='in'||act==='up')openAuth(act);
-  if(act==='out'&&sb){await sb.auth.signOut();user=null;profile=null;renderAuth();renderFeed()}
-});
+  if(act==='out'&&sb){await sb.auth.signOut();user=null;profile=null;renderAuth();renderFeed();renderAds()}
+}
+['#authBox','#mAuth','#dAcct'].forEach(s=>$(s).addEventListener('click',authClick));
+$('#mAuth').addEventListener('click',e=>{if(e.target.closest('#mAvatar'))openDrawer()});
+
+/* ---------- Menu lateral (telemóvel) ---------- */
+const drawer=$('#drawer'),scrim=$('#scrim');let lastFocus=null;
+function openDrawer(){lastFocus=document.activeElement;drawer.classList.add('open');scrim.classList.add('show');document.body.classList.add('lock');$('#hamBtn').setAttribute('aria-expanded','true');setTimeout(()=>$('#dClose').focus(),60)}
+function closeDrawer(){
+  if(!drawer.classList.contains('open'))return;
+  drawer.classList.remove('open');scrim.classList.remove('show');document.body.classList.remove('lock');$('#hamBtn').setAttribute('aria-expanded','false');
+  if(lastFocus&&lastFocus.focus){try{lastFocus.focus()}catch(e){}}
+}
+$('#hamBtn').addEventListener('click',openDrawer);
+$('#dClose').addEventListener('click',closeDrawer);
+scrim.addEventListener('click',closeDrawer);
+drawer.addEventListener('click',e=>{if(e.target.closest('a'))closeDrawer()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+window.matchMedia('(min-width:821px)').addEventListener('change',e=>{if(e.matches)closeDrawer()});
+(function(){const src=document.querySelector('.mast .logo svg');if(!src)return;const h=src.outerHTML;$('#mLogo').innerHTML=h.replace(/bh1i/g,'bh1im');$('#dLogo').innerHTML=h.replace(/bh1i/g,'bh1id')})();
+
+/* ---------- Publicidade (banner rotativo) ---------- */
+let ads=[],adIdx=0,adTimer=null,adPaused=false;
+const REDUCED=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function slideHTML(a,i){
+  if(a.house)return '<a class="slide house" href="PostAngola.html"><b>Espaço publicitário.</b><span>Só os editores veem esta mensagem. Adicione anúncios em Painel PostAngola, Publicidade.</span></a>';
+  const img=safeUrl(a.image_url),m=safeUrl(a.image_mobile_url),link=safeUrl(a.link_url);
+  if(!img)return '';
+  const pic='<picture>'+(m?'<source media="(max-width:600px)" srcset="'+esc(m)+'">':'')+'<img src="'+esc(img)+'" alt="'+esc(a.sponsor||'Publicidade')+'" loading="'+(i?'lazy':'eager')+'"></picture>';
+  return link?'<a class="slide" href="'+esc(link)+'" target="_blank" rel="noopener sponsored" aria-label="'+esc(a.sponsor||'Publicidade')+'">'+pic+'</a>':'<div class="slide">'+pic+'</div>';
+}
+function showAd(i){
+  const slides=$('#adTrack').children,dots=$('#adDots').children;
+  adIdx=i;
+  Array.from(slides).forEach((s,k)=>s.classList.toggle('on',k===i));
+  Array.from(dots).forEach((d,k)=>d.setAttribute('aria-current',k===i?'true':'false'));
+}
+function stopAds(){clearInterval(adTimer);adTimer=null}
+function startAds(){
+  stopAds();
+  const n=$('#adTrack').children.length;
+  if(n<2||REDUCED)return;
+  adTimer=setInterval(()=>{if(!adPaused&&!document.hidden)showAd((adIdx+1)%n)},6500);
+}
+function renderAds(){
+  const band=$('#adband');
+  let list=ads.slice();
+  if(!list.length){
+    if(!isEditor()){band.hidden=true;stopAds();return}
+    list=[{house:true}];
+  }
+  const html=list.map(slideHTML).join('');
+  band.hidden=false;
+  $('#adTrack').innerHTML=html;
+  $('#adDots').innerHTML=list.length>1?list.map((a,i)=>'<button type="button" data-i="'+i+'" aria-label="Anúncio '+(i+1)+'"></button>').join(''):'';
+  showAd(0);startAds();
+}
+$('#adDots').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(!b)return;showAd(parseInt(b.getAttribute('data-i'),10));startAds()});
+const adEl=$('#ad');
+['mouseenter','focusin','touchstart'].forEach(ev=>adEl.addEventListener(ev,()=>{adPaused=true},{passive:true}));
+['mouseleave','focusout','touchend'].forEach(ev=>adEl.addEventListener(ev,()=>{adPaused=false},{passive:true}));
+async function loadAds(){
+  if(!sb)return;
+  const {data,error}=await sb.from('ads').select('*').eq('active',true).order('sort_order',{ascending:true}).order('created_at',{ascending:false}).limit(5);
+  ads=error?[]:(data||[]);
+  renderAds();
+}
 function setMode(m){
   mode=m;
   authDlg.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.getAttribute('data-mode')===m));
@@ -415,7 +596,7 @@ async function applySession(session){
     const {data}=await sb.from('profiles').select('full_name,role').eq('id',user.id).maybeSingle();
     profile=data||{full_name:user.email,role:'reader'};
   }
-  renderAuth();renderFeed();
+  renderAuth();renderFeed();renderAds();
 }
 
 /* ---------- Início ---------- */
@@ -425,6 +606,7 @@ if(sb){
   sb.auth.onAuthStateChange((ev,session)=>{setTimeout(()=>applySession(session),0)});
 }
 loadArticles();
+loadAds();
 if(new URLSearchParams(location.search).get('login')==='1'&&sb)openAuth('in');
 })();
 </script>
