@@ -3,5 +3,8 @@
 // NUNCA coloque aqui chaves "sb_secret_..." ou "service_role".
 window.PA_CONFIG = {
   SUPABASE_URL: 'https://dniuybnmwlsvgxbvtrkn.supabase.co',
-  SUPABASE_ANON_KEY: 'sb_publishable_GsZRs1JrD0y-wYav9wjl2A_Ju1loLJp'
+  SUPABASE_ANON_KEY: 'sb_publishable_GsZRs1JrD0y-wYav9wjl2A_Ju1loLJp',
+  // Número de WhatsApp que aparece na página Sobre Nós. Deixe vazio para não mostrar.
+  // Exemplo: '+244 923 456 789'
+  WHATSAPP: ''
 };
