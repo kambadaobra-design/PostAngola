@@ -55,7 +55,15 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 footer a{color:#d4d4d4;text-decoration:none}
 footer a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
 .sep{opacity:.5}
+@media (max-width:560px){footer .sep{display:none}}
 @media (max-width:560px){.fica div{grid-template-columns:1fr;gap:2px}.logo svg{height:40px}.back{font-size:13px}p,li,dd{font-size:18px}}
+.cookie{position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));background:#121212;color:#fff;box-shadow:0 -6px 24px rgba(0,0,0,.25)}
+.cookie[hidden]{display:none}
+.cookie p{margin:0;font-family:var(--sans);font-size:14px;line-height:1.45}
+.cookie a{color:#ff7a8c;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cookie button{flex:none;background:var(--red);color:#fff;border:0;border-radius:6px;padding:9px 22px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
+.cookie button:hover{filter:brightness(1.12)}
+@media (max-width:560px){.cookie{flex-direction:column;align-items:stretch;gap:10px}.cookie button{width:100%;padding:11px}}
 </style>
 </head>
 <body>
@@ -67,7 +75,7 @@ footer a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
 <main>
 <h1>Política de Privacidade</h1>
 <p class="lead">Explicamos que dados recolhemos, para que servem e como podes exercer os teus direitos.</p>
-<p class="updated">Última atualização: 15 de Outubro de 2026</p>
+<p class="updated">Última atualização: 16 de Outubro de 2026</p>
 
 <h2>1. Dados que recolhemos</h2>
 <p>Não recolhemos dados pessoais sensíveis. Recolhemos apenas o necessário para o site funcionar:</p>
@@ -79,7 +87,7 @@ footer a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
 </ul>
 
 <h2>2. Onde estão os dados</h2>
-<p>O site está alojado no GitHub Pages e a base de dados está no Supabase (União Europeia). Ambos declaram cumprir o RGPD. Tratamos os dados em conformidade com a legislação angolana de proteção de dados pessoais.</p>
+<p>O site está alojado no GitHub Pages e a base de dados está no Supabase (União Europeia). Ambos declaram cumprir o RGPD. Tratamos os dados em conformidade com a Lei n.º 22/11, de 17 de Junho (Lei de Proteção de Dados Pessoais).</p>
 
 <h2>3. Cookies</h2>
 <p>Usamos cookies e armazenamento local do navegador para manter a tua sessão iniciada e, se ativados, para análise de visitas. Podes desativá-los nas definições do navegador. Algumas funções, como o início de sessão, podem deixar de funcionar.</p>
@@ -105,5 +113,24 @@ footer a:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
   </div>
 </footer>
 
+<div class="cookie" id="cookieBar" role="region" aria-label="Aviso de cookies" hidden>
+  <p>Usamos cookies para melhorar o site. Saiba mais na <a href="politica-de-privacidade.html">Política de Privacidade</a>.</p>
+  <button type="button" id="cookieOk">Aceitar</button>
+</div>
+<script>
+(function(){
+  var bar=document.getElementById('cookieBar'),KEY='pa:cookies';
+  if(!bar)return;
+  function aceites(){try{return localStorage.getItem(KEY)==='aceites'}catch(e){return false}}
+  function ajusta(){document.body.style.paddingBottom=bar.hidden?'':bar.offsetHeight+'px'}
+  if(aceites())return;
+  bar.hidden=false;ajusta();
+  window.addEventListener('resize',ajusta);
+  document.getElementById('cookieOk').addEventListener('click',function(){
+    try{localStorage.setItem(KEY,'aceites')}catch(e){}
+    bar.hidden=true;ajusta();
+  });
+})();
+</script>
 </body>
 </html>
