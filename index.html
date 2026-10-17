@@ -214,6 +214,7 @@ footer a:hover{color:#fff}
 body.lock{overflow:hidden}
 .thumb img{object-position:center 30%}
 .thumb img.bg{display:none}
+@media (max-width:1120px){.cats button{padding:14px 9px;font-size:14px}}
 .r-img.has{aspect-ratio:auto;background:#111}
 .r-img.has img{height:auto;max-height:62vh;object-fit:contain}
 
@@ -354,8 +355,8 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const enc=encodeURIComponent;
 function safeUrl(u){try{const x=new URL(u);return (x.protocol==='https:'||x.protocol==='http:')?x.href:''}catch(e){return ''}}
 
-const CATS=['Sociedade','Economia','Política','Educação','Tecnologia','Energia','Desporto','Cultura'];
-const GRAD={Economia:['#0B6E4F','#063B2A'],'Política':['#1F3A93','#101F52'],Sociedade:['#8A4B08','#4A2704'],'Educação':['#6B2FA0','#381456'],Energia:['#C77700','#6E4000'],Tecnologia:['#0A6C8F','#043A4D'],Desporto:['#C8102E','#6E0819'],Cultura:['#A3195B','#58092F']};
+const CATS=['Sociedade','Economia','Política','Educação','Tecnologia','Energia','Desporto','Cultura','Negócios','Emprego'];
+const GRAD={Economia:['#0B6E4F','#063B2A'],'Política':['#1F3A93','#101F52'],Sociedade:['#8A4B08','#4A2704'],'Educação':['#6B2FA0','#381456'],Energia:['#C77700','#6E4000'],Tecnologia:['#0A6C8F','#043A4D'],Desporto:['#C8102E','#6E0819'],Cultura:['#A3195B','#58092F'],'Negócios':['#8A6D0B','#4A3A04'],Emprego:['#3B3F8C','#1A1C47']};
 const grad=c=>{const g=GRAD[c]||['#555','#222'];return 'background:linear-gradient(135deg,'+g[0]+','+g[1]+')'};
 
 const CFG=window.PA_CONFIG||{};

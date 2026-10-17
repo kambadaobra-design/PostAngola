@@ -1,0 +1,12 @@
+PostAngola - pacote do site
+
+PARA O GITHUB (raiz do repositorio):
+  index.html, sobre.html, politica-de-privacidade.html, termos.html,
+  PostAngola.html, config.js e a pasta logo/
+
+PARA O SUPABASE (SQL Editor) - so se ainda nao correu:
+  LEIA-ME_supabase/supabase_setup.sql      (tabelas, regras, imagens)
+  LEIA-ME_supabase/supabase_publicidade.sql (banner de publicidade)
+Estes ficheiros NAO vao para o GitHub.
+
+config.js: pode preencher WHATSAPP para aparecer na pagina Sobre.
