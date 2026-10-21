@@ -1,16 +1,4 @@
-PostAngola - pacote do site (com aplicacao instalavel)
+PostAngola - pacote do site
 
-PARA O GITHUB (raiz do repositorio, mantendo as pastas):
-  index.html, sobre.html, politica-de-privacidade.html, termos.html, PostAngola.html
-  config.js, manifest.webmanifest, sw.js
-  pasta icons/  (icones da aplicacao)
-  pasta logo/
-
-PARA O SUPABASE (SQL Editor) - so se ainda nao correu:
-  LEIA-ME_supabase/supabase_setup.sql
-  LEIA-ME_supabase/supabase_publicidade.sql
-Estes ficheiros NAO vao para o GitHub.
-
-APLICACAO: sw.js e manifest.webmanifest TEM de ficar na raiz, ao lado do index.html.
-Depois de enviar, abra o site com internet uma vez (para guardar a copia) e use o botao
-"Instalar aplicacao" no fundo da pagina.
+GITHUB (raiz): index.html, sobre.html, politica-de-privacidade.html, termos.html, PostAngola.html, config.js, manifest.webmanifest, sw.js + pastas icons/ e logo/
+SUPABASE (SQL Editor, so se ainda nao correu): pasta LEIA-ME_supabase. Estes NAO vao para o GitHub.
