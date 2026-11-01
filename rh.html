@@ -1,32 +1,91 @@
-<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RH PostAngola</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><style>body{font-family:Inter,Arial;background:#f6f6f8;padding:20px}.card{background:#fff;border-radius:16px;padding:16px;margin-bottom:16px}.li{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}.pill{padding:2px 10px;border-radius:999px;background:#eee;font-size:12px;font-weight:600}.btn{padding:6px 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer}.btn.primary{background:#C8102E;color:#fff;border-color:#C8102E}</style></head><body>
-<div style="display:flex;justify-content:space-between"><h2>RH - Gestão</h2><a class="btn" href="PostAngola.html">← Painel</a></div>
-<div class="card"><h3>Equipa</h3><div id="list"></div></div>
+<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RH PostAngola - Gestão Completa</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><style>body{font-family:Inter,system-ui;background:#f6f6f8;margin:0;padding:20px} .card{background:#fff;border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,.06)} .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px} input,select,textarea{width:100%;padding:10px;border:1px solid #e5e7eb;border-radius:10px;margin-top:6px} label{font-size:13px;font-weight:600;margin-top:10px;display:block} .li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid #eee} .li:first-child{border-top:0} .pill{padding:2px 10px;border-radius:999px;background:#eee;font-size:12px;font-weight:600} .btn{padding:8px 14px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-weight:600} .btn.primary{background:#C8102E;color:#fff;border-color:#C8102E} .btn:disabled{opacity:.5} [hidden]{display:none!important}</style></head><body>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><div><h1 style="margin:0">RH / Funcionários</h1><p style="color:#6b7280;font-size:13px;margin:4px 0 0">Só C level adiciona funcionários. Gestão completa.</p></div><div><a class="btn" href="PostAngola.html">← Painel</a> <span id="myCode" class="pill"></span></div></div>
+
+<div class="card" id="addCard" hidden>
+  <h3 style="margin:0 0 12px">+ Novo Funcionário (só C)</h3>
+  <div class="grid2">
+    <div><label>Nome completo</label><input id="fName" placeholder="Ex: João Silva"></div>
+    <div><label>Email (login)</label><input id="fEmail" type="email" placeholder="joao@postangola.ao"></div>
+    <div><label>Data nascimento</label><input id="fDob" type="date"></div>
+    <div><label>Contacto / Telefone</label><input id="fPhone" placeholder="923..."></div>
+    <div><label>Morada</label><input id="fAddr" placeholder="Belas, Luanda"></div>
+    <div><label>NIF (opcional)</label><input id="fNif"></div>
+    <div><label>Formação</label><input id="fForm" placeholder="Lic. Comunicação"></div>
+    <div><label>Categoria</label><select id="fCat"><option>Efetivo</option><option>Estagiário</option><option>Freelancer</option><option>Colaborador</option></select></div>
+    <div><label>Departamento</label><select id="fDept"><option>Redação</option><option>Comercial</option><option>Técnico</option><option>Marketing</option><option>Direção</option></select></div>
+    <div><label>Função / Acesso</label><select id="fAccess"><option value="N1">N1 - Editor (só rascunho)</option><option value="N2">N2 - Editor Chefe (publica)</option><option value="B1">B1 - Director Adjunto</option><option value="B2">B2 - Director</option><option value="B10">B10 - Director Geral</option><option value="M1">M1 - Mega Admin</option><option value="M100">M100 - Super Admin</option><option value="C1">C1 - CEO</option></select></div>
+    <div><label>Notas</label><textarea id="fNotes" rows="2"></textarea></div>
+  </div>
+  <div style="margin-top:12px;display:flex;gap:8px"><button class="btn primary" id="btnCreate">Criar funcionário e enviar convite</button><button class="btn" onclick="document.getElementById('addCard').hidden=true">Cancelar</button></div>
+  <p style="font-size:12px;color:#6b7280;margin-top:8px">O funcionário recebe email para definir password. Depois aparece em v_performance.</p>
+</div>
+
+<div class="card"><div style="display:flex;justify-content:space-between"><h3 style="margin:0">Lista de funcionários</h3><div><button class="btn primary" id="btnShowAdd" hidden>+ Novo Funcionário</button> <span id="avgInfo" class="pill"></span></div></div><div id="list" style="margin-top:12px"></div></div>
+
 <script>
 (async()=>{
-  const supa=supabase.createClient(PA_CONFIG.SUPABASE_URL,PA_CONFIG.SUPABASE_ANON_KEY);
-  const {data:{user}}=await supa.auth.getUser(); if(!user){document.body.innerHTML='Faz login';return}
-  const {data:me}=await supa.from('profiles').select('*').eq('id',user.id).single();
-  const {data:perf}=await supa.from('v_performance').select('*');
-  const canViewAll=['B1','B2','B10','M1','M100','C1'].includes(me.access_code);
-  const canPromote=(actor,target,newCode)=>{
-    if(actor==='C1') return true;
-    if(actor==='M100') return newCode!=='C1' || target==='C1';
-    if(actor==='M1') return ['N0','N1','N2','B1','B2','B10','M1'].includes(newCode);
-    return false;
-  };
-  document.getElementById('list').innerHTML=perf.map(p=>{
-    if(!canViewAll && p.id!==me.id) return '';
-    const canEdit=canPromote(me.access_code,p.access_code,p.access_code);
-    return `<div class=li><div><b>${p.full_name}</b> - ${p.access_code} - ${p.news_month||0} no mês - ${p.news_week||0} semana ${ (p.news_month||0) >= (perf.reduce((s,x)=>s+(x.news_month||0),0)/perf.length) ? '▲ acima média' : '▼ abaixo média'}</div><div>${canEdit?`<select id="sel-${p.id}"><option>${p.access_code}</option><option>N0</option><option>N1</option><option>N2</option><option>B1</option><option>B2</option><option>B10</option><option>M1</option><option>M100</option><option>C1</option></select><button class="btn primary" onclick="save('${p.id}')">Salvar</button>`:`<span class=pill>só leitura</span>`}</div></div>`;
+  const supa = supabase.createClient(PA_CONFIG.SUPABASE_URL, PA_CONFIG.SUPABASE_ANON_KEY);
+  const esc = s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+  const {data:{user}} = await supa.auth.getUser(); if(!user){document.body.innerHTML='Faz login no PostAngola.html';return}
+  const {data:me} = await supa.from('profiles').select('*').eq('id',user.id).single();
+  if(!me){alert('Perfil não encontrado');return}
+  document.getElementById('myCode').textContent = me.access_code + ' · ' + me.role;
+  const isC = ['C1','M100'].includes(me.access_code);
+  if(isC){ document.getElementById('addCard').hidden=false; document.getElementById('btnShowAdd').hidden=false; }
+  document.getElementById('btnShowAdd').onclick=()=>document.getElementById('addCard').hidden=false;
+
+  const {data:perf} = await supa.from('v_performance').select('*');
+  const {data:allProfiles} = await supa.from('profiles').select('*').order('created_at',{ascending:false});
+  const media = perf && perf.length ? perf.reduce((s,x)=>s+(x.news_month||0),0)/perf.length : 0;
+  document.getElementById('avgInfo').textContent='Média mensal: '+media.toFixed(1);
+
+  // Render lista completa
+  document.getElementById('list').innerHTML = allProfiles.map(p=>{
+    const pr = perf.find(x=>x.id===p.id);
+    return `<div class="li"><div><b>${esc(p.full_name)}</b> <span class="pill">${esc(p.access_code)}</span> <span class="pill">${esc(p.employee_category||'Efetivo')} - ${esc(p.department||'Redação')}</span><br><span style="font-size:12px;color:#6b7280">${esc(p.phone||'')} | ${esc(p.address||'')} | Nasc: ${p.date_of_birth||'-'} | Form: ${esc(p.formation||'')} | ${pr?`${pr.news_month||0} no mês, ${pr.news_week||0} semana, ${pr.total_published||0} total`:'Sem publicações'}</span></div><div>${isC?`<button class="btn" onclick="editEmp('${p.id}')">Ver/Editar</button>`:''}</div></div>`;
   }).join('');
-  window.save=async(id)=>{
-    const code=document.getElementById('sel-'+id).value;
-    if(!canPromote(me.access_code,(perf.find(x=>x.id===id)||{}).access_code,code)){alert('Sem permissão para dar este acesso');return}
-    const role=code==='N1'?'editor':code==='N2'?'editor_chefe':code.startsWith('B')?'director':code.startsWith('M')?'admin':code.startsWith('C')?'ceo':'reader';
-    const {error}=await supa.from('profiles').update({access_code:code,role}).eq('id',id);
-    if(error){alert(error.message);return}
-    await supa.from('audit_logs').insert({actor_id:user.id,action:'promote',target_id:id,details:{new_code:code,by:me.full_name}});
-    alert('Promovido para '+code); location.reload();
+
+  document.getElementById('btnCreate').onclick = async()=>{
+    const name=document.getElementById('fName').value.trim();
+    const email=document.getElementById('fEmail').value.trim();
+    const access=document.getElementById('fAccess').value;
+    if(!name||!email){alert('Nome e email obrigatórios');return}
+    const btn=document.getElementById('btnCreate'); btn.disabled=true; btn.textContent='A criar...';
+    try{
+      // 1. Cria utilizador no Auth com password temporária
+      const tempPass = 'PostAngola@'+Math.floor(1000+Math.random()*9000);
+      const {data:sign, error:signErr} = await supa.auth.signUp({email, password: tempPass, options:{data:{full_name:name}}});
+      if(signErr) throw signErr;
+      const newId = sign.user?.id;
+      if(!newId) throw new Error('Não foi possível criar utilizador - verifica se email já existe');
+      // 2. Atualiza profile com dados RH
+      const role = access==='N1'?'editor':access==='N2'?'editor_chefe':access.startsWith('B')?'director':access.startsWith('M')?'admin':access.startsWith('C')?'ceo':'reader';
+      const payload = {
+        id:newId, full_name:name, email, access_code:access, role,
+        date_of_birth: document.getElementById('fDob').value||null,
+        phone: document.getElementById('fPhone').value||null,
+        address: document.getElementById('fAddr').value||null,
+        nif: document.getElementById('fNif').value||null,
+        formation: document.getElementById('fForm').value||null,
+        employee_category: document.getElementById('fCat').value,
+        department: document.getElementById('fDept').value,
+        notes: document.getElementById('fNotes').value||null
+      };
+      const {error:upErr} = await supa.from('profiles').upsert(payload);
+      if(upErr) throw upErr;
+      await supa.from('audit_logs').insert({actor_id:user.id, action:'create_employee', target_id:newId, details:{...payload, tempPass}});
+      alert(`Funcionário criado!\nEmail: ${email}\nPassword temporária: ${tempPass}\n\nEnvia ao funcionário para ele trocar no primeiro login.`);
+      location.reload();
+    }catch(e){ alert('Erro: '+e.message); btn.disabled=false; btn.textContent='Criar funcionário e enviar convite'; }
+  };
+
+  window.editEmp = async(id)=>{
+    const p = allProfiles.find(x=>x.id===id);
+    const newPhone = prompt(`Editar ${p.full_name}\nTelefone atual: ${p.phone||''}\nNovo telefone (deixa vazio para manter):`, p.phone||'');
+    if(newPhone===null) return;
+    const newAddr = prompt('Morada:', p.address||'');
+    const {error} = await supa.from('profiles').update({phone:newPhone, address:newAddr}).eq('id',id);
+    if(error) alert(error.message); else {alert('Atualizado'); location.reload()}
   };
 })();
 </script></body></html>
