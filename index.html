@@ -410,7 +410,14 @@ function warmImages(list){
   if(!('serviceWorker' in navigator)||!navigator.serviceWorker.controller||navigator.onLine===false)return;
   list.map(safeUrl).filter(Boolean).slice(0,24).forEach(u=>{fetch(u,{mode:'cors',credentials:'omit'}).catch(()=>{})});
 }
-const isEditor=()=>profile&&(profile.role==='editor'||profile.role==='admin');
+const LVL={N0:0,N1:10,N2:20,B1:60,B2:70,B10:80,M1:90,M100:100,C1:200};
+const NAME={N1:'Redator',N2:'Editor-chefe',B1:'RH',B2:'RH',B10:'Direção',M1:'Admin',M100:'Admin',C1:'Proprietário'};
+const isEditor=()=>{
+  if(!profile)return false;
+  if(profile.access_code!==undefined)return profile.active!==false&&(LVL[profile.access_code]||0)>=10;
+  return profile.role==='editor'||profile.role==='admin';   // base de dados ainda sem os níveis
+};
+const roleLabel=()=>profile&&profile.access_code!==undefined?(NAME[profile.access_code]||'Equipa'):(profile&&profile.role==='admin'?'Admin':'Editor');
 
 /* ---------- Datas ---------- */
 function ago(iso){
@@ -540,7 +547,7 @@ function renderMobileAuth(){
   const name=(profile&&profile.full_name)||user.email||'Leitor';
   const ini=(name.trim().charAt(0)||'?').toUpperCase();
   m.innerHTML='<button class="avatar" type="button" id="mAvatar" aria-label="Abrir menu da conta">'+esc(ini)+'</button>';
-  d.innerHTML='<div class="d-user"><span class="avatar">'+esc(ini)+'</span><div><b>'+esc(name)+'</b>'+(isEditor()?'<span class="role">'+(profile.role==='admin'?'Admin':'Editor')+'</span>':'')+'</div></div><div class="d-btns">'+(isEditor()?'<a class="cta" href="PostAngola.html">Painel PostAngola</a>':'')+'<button class="btn2" type="button" data-act="out">Sair</button></div>';
+  d.innerHTML='<div class="d-user"><span class="avatar">'+esc(ini)+'</span><div><b>'+esc(name)+'</b>'+(isEditor()?'<span class="role">'+roleLabel()+'</span>':'')+'</div></div><div class="d-btns">'+(isEditor()?'<a class="cta" href="PostAngola.html">Painel PostAngola</a>':'')+'<button class="btn2" type="button" data-act="out">Sair</button></div>';
 }
 function renderAuth(){
   renderMobileAuth();
@@ -548,7 +555,7 @@ function renderAuth(){
   if(!user){box.innerHTML='<button class="lnk" type="button" data-act="in">Entrar</button><button class="cta" type="button" data-act="up">Criar conta</button>';return}
   const name=(profile&&profile.full_name)||user.email||'Leitor';
   let h='<span class="who">Olá, '+esc(name.split(' ')[0])+'</span>';
-  if(isEditor())h+='<span class="role">'+(profile.role==='admin'?'Admin':'Editor')+'</span><a class="cta" href="PostAngola.html">Painel PostAngola</a>';
+  if(isEditor())h+='<span class="role">'+roleLabel()+'</span><a class="cta" href="PostAngola.html">Painel PostAngola</a>';
   h+='<button class="lnk" type="button" data-act="out">Sair</button>';
   box.innerHTML=h;
 }
@@ -671,7 +678,9 @@ $('#authForm').addEventListener('submit',async e=>{
 async function applySession(session){
   user=session?session.user:null;profile=null;
   if(user){
-    const {data}=await sb.from('profiles').select('full_name,role').eq('id',user.id).maybeSingle();
+    let {data,error}=await sb.from('profiles').select('full_name,role,access_code,status,approval_status').eq('id',user.id).maybeSingle();
+    if(error){const r=await sb.from('profiles').select('full_name,role').eq('id',user.id).maybeSingle();data=r.data}
+    if(data&&data.access_code!==undefined)data.active=data.status==='ativo'&&data.approval_status==='aprovado';
     profile=data||{full_name:user.email,role:'reader'};
   }
   renderAuth();renderFeed();renderAds();

@@ -1,4 +1,14 @@
 PostAngola - pacote do site
 
-GITHUB (raiz): index.html, sobre.html, politica-de-privacidade.html, termos.html, PostAngola.html, config.js, manifest.webmanifest, sw.js + pastas icons/ e logo/
-SUPABASE (SQL Editor, so se ainda nao correu): pasta LEIA-ME_supabase. Estes NAO vao para o GitHub.
+GITHUB (raiz do repositorio, mantendo as pastas):
+  index.html, sobre.html, politica-de-privacidade.html, termos.html,
+  PostAngola.html, rh.html, staff.js, config.js, manifest.webmanifest, sw.js
+  pastas icons/ e logo/
+
+SUPABASE (SQL Editor) - correr por ordem, so os que ainda nao correu:
+  LEIA-ME_supabase/1_supabase_setup.sql
+  LEIA-ME_supabase/2_supabase_publicidade.sql
+  LEIA-ME_supabase/3_supabase_rh.sql   <- NOVO: niveis de acesso, fichas protegidas, convites, auditoria
+Estes ficheiros NAO vao para o GitHub.
+
+ANTES DE USAR O RH: em Supabase > Authentication > Providers > Email, deixe "Confirm email" LIGADO.

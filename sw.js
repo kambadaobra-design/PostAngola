@@ -2,14 +2,14 @@
    - Páginas: tenta a rede primeiro (conteúdo sempre atual) e, sem internet, usa a última cópia guardada.
    - Ficheiros do site, tipos de letra, biblioteca e imagens: servem a cópia guardada e atualizam em segundo plano.
    - Dados das notícias (Supabase): guardados pela própria aplicação (localStorage). */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const SHELL = 'pa-shell-' + VERSION;
 const RUNTIME = 'pa-runtime-' + VERSION;
 const IMG = 'pa-img-' + VERSION;
 
 const SHELL_URLS = [
   './', 'index.html', 'sobre.html', 'politica-de-privacidade.html', 'termos.html',
-  'config.js', 'manifest.webmanifest',
+  'config.js', 'staff.js', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/apple-touch-icon.png',
   'logo/postangola-logo.svg', 'logo/favicon.svg'
 ];

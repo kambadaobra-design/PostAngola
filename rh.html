@@ -1,89 +1,257 @@
-<!DOCTYPE html><html lang="pt"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RH Completo - Ficha Total</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script>
-<style>body{font-family:Inter,system-ui;background:#f6f6f8;margin:0;padding:20px} .card{background:#fff;border-radius:16px;padding:16px;margin-bottom:16px} .li{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-top:1px solid #eee} .pill{padding:2px 10px;border-radius:999px;background:#eee;font-size:11px;font-weight:700} .btn{padding:7px 12px;border-radius:10px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font-weight:600} .btn.primary{background:#C8102E;color:#fff;border-color:#C8102E} .btn.green{background:#16a34a;color:#fff;border:0} input,select,textarea{width:100%;padding:9px;border:1px solid #e5e7eb;border-radius:10px;margin-top:4px} label{font-size:11px;font-weight:800;margin-top:10px;display:block;text-transform:uppercase;color:#6b7280} .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px} dialog{border:0;border-radius:16px;padding:0;max-width:620px;width:94vw} dialog::backdrop{background:rgba(0,0,0,.45)} .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed #eee;font-size:14px} .row b{color:#374151} .row span{color:#111;max-width:60%;text-align:right;word-break:break-word} [hidden]{display:none!important}</style></head><body>
-<div style="display:flex;justify-content:space-between"><div><h1 style="margin:0">RH / Gestão - Ficha Completa</h1><p style="margin:4px 0 0;color:#6b7280;font-size:12px">ID automático • Chefes veem sua equipa • RH edita</p></div><div><a class="btn" href="PostAngola.html">← Painel</a> <span id="myCode" class="pill"></span></div></div>
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#C8102E">
+<title>RH e Equipa | PostAngola</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20viewBox=%220%200%20120%20128%22%20width=%22120%22%20height=%22128%22%20role=%22img%22%20aria-label=%22PostAngola%22%3E%3Cdefs%3E%3CclipPath%20id=%22bm3%22%3E%3Crect%20x=%228%22%20y=%228%22%20width=%22104%22%20height=%2292%22%20rx=%2228%22/%3E%3C/clipPath%3E%3C/defs%3E%0A%3Cpath%20d=%22M38%2094%20L27%20116.5%20Q26%20119%2028.6%20117.6%20L66%2094%20Z%22%20fill=%22%23F5B800%22%20stroke=%22%23F5B800%22%20stroke-width=%223%22%20stroke-linejoin=%22round%22/%3E%0A%3Cg%20clip-path=%22url(%23bm3)%22%3E%3Crect%20x=%220%22%20y=%220%22%20width=%22120%22%20height=%2254%22%20fill=%22%23C8102E%22/%3E%3Crect%20x=%220%22%20y=%2254%22%20width=%22120%22%20height=%2260%22%20fill=%22%23121212%22/%3E%3C/g%3E%0A%3Cpath%20fill=%22%23FFFFFF%22%20fill-rule=%22evenodd%22%20d=%22M36.5%2028H64.5A19%2019%200%200%201%2064.5%2066H50.5V80H36.5Z%20M64.5%2040.5A6.5%206.5%200%201%200%2064.5%2053.5A6.5%206.5%200%201%200%2064.5%2040.5Z%22/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F6F4F1; --surface:#FFFFFF; --surface-2:#F0EDE8; --text:#16120F; --muted:#6B645C;
+  --border:#E3DED6; --primary:#C8102E; --primary-ink:#FFFFFF; --gold:#E5A800; --ok:#1B7F4B; --ok-bg:#E3F4EA;
+  --warn:#8A5A00; --warn-bg:#FFF3D6; --shadow:0 1px 2px rgba(22,18,15,.06),0 8px 24px rgba(22,18,15,.06);
+  --font:'Archivo',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F0D0C; --surface:#1A1715; --surface-2:#252019; --text:#F4EFE9; --muted:#A39B90;
+    --border:#332D27; --primary:#E5304D; --ok:#5FD08F; --ok-bg:#12281C; --warn:#F2C45C; --warn-bg:#2E2410;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    --logo-text:#F4EFE9; --logo-body:#3A342E; --logo-red:#E5304D;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F0D0C; --surface:#1A1715; --surface-2:#252019; --text:#F4EFE9; --muted:#A39B90;
+  --border:#332D27; --primary:#E5304D; --ok:#5FD08F; --ok-bg:#12281C; --warn:#F2C45C; --warn-bg:#2E2410;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    --logo-text:#F4EFE9; --logo-body:#3A342E; --logo-red:#E5304D;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{margin:0;padding:0;box-sizing:border-box}
+[hidden]{display:none!important}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.5;font-size:15px;-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
-<div class="card" id="addCard" hidden><h3 style="margin:0 0 10px">+ Novo Funcionário</h3><div class="grid2"><div><label>Nome completo</label><input id="fName"></div><div><label>Email (login)</label><input id="fEmail" type="email"></div><div><label>Data Nasc.</label><input id="fDob" type="date"></div><div><label>Contacto</label><input id="fPhone"></div><div><label>Morada</label><input id="fAddr"></div><div><label>NIF</label><input id="fNif"></div><div><label>Formação</label><input id="fForm"></div><div><label>Categoria</label><select id="fCat"><option>Efetivo</option><option>Estagiário</option><option>Freelancer</option><option>Colaborador</option></select></div><div><label>Departamento</label><select id="fDept"><option>Redação</option><option>RH</option><option>Comercial</option><option>Técnico</option><option>Direção</option></select></div><div><label>Acesso</label><select id="fAccess"><option value="N1">N1 Editor</option><option value="N2">N2 Editor Chefe</option><option value="B1">B1 RH Técnico</option><option value="B2">B2 Director RH</option><option value="B10">B10 Director Geral</option><option value="M1">M1 Mega Admin</option><option value="M100">M100 Super</option></select></div></div><label>Notas</label><textarea id="fNotes"></textarea><div style="margin-top:10px"><button class="btn primary" id="btnCreate">Criar (pendente se não for C)</button></div></div>
+/* Topbar */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 20px;background:var(--surface);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:var(--primary);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:800;letter-spacing:0;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}
+.top-actions{display:flex;align-items:center;gap:8px;min-width:0}
+.link-chip{display:flex;align-items:center;gap:8px;height:38px;max-width:280px;padding:8px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface-2);cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.link-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.link-chip.empty .dot{background:var(--gold)}
+.icon-btn{width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:grid;place-items:center}
 
-<div class="card"><div style="display:flex;justify-content:space-between"><h3 style="margin:0">Equipa</h3><div><button class="btn primary" id="btnShowAdd" hidden>+ Novo</button> <span id="avgInfo" class="pill"></span> <span id="viewInfo" class="pill"></span></div></div><div id="list">A carregar...</div></div>
+/* Layout */
+.app{display:grid;grid-template-columns:224px minmax(0,1fr);min-height:calc(100vh - 64px)}
+.rail{position:sticky;top:calc(64px + env(safe-area-inset-top,0px));align-self:start;padding:18px 14px;display:flex;flex-direction:column;gap:4px}
+.nav{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:10px;border:0;background:transparent;cursor:pointer;font-weight:600;color:var(--muted);text-align:left;width:100%}
+.nav svg{width:20px;height:20px;flex:none;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav:hover{background:var(--surface-2);color:var(--text)}
+.nav[aria-current="page"]{background:var(--surface);color:var(--primary);box-shadow:var(--shadow)}
+main{padding:24px 28px 56px;max-width:1240px;width:100%}
+.page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+h1{font-size:30px;letter-spacing:-.025em;line-height:1.15;font-weight:800}
+.sub{color:var(--muted);margin-top:4px;max-width:60ch}
+h2{font-size:17px;font-weight:700;letter-spacing:-.01em}
+h3{font-size:15px;font-weight:700}
 
+/* Components */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+.card + .card{margin-top:16px}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 16px;border-radius:10px;border:1px solid var(--border);background:var(--surface);cursor:pointer;font-weight:600;font-size:14px;transition:background .15s,border-color .15s}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--primary-ink)}
+.btn.primary:hover{filter:brightness(1.08);background:var(--primary)}
+.btn.sm{padding:7px 11px;font-size:13px}
+.btn.danger{color:var(--primary)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+label.f{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+.field{margin-bottom:14px}
+input[type=text],input[type=url],textarea,select{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--border);background:var(--bg);font-size:15px}
+input[type=text]:focus,input[type=url]:focus,textarea:focus,select:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+textarea{resize:vertical;min-height:96px}
+.hint{font-size:12.5px;color:var(--muted);margin-top:5px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.seg span{display:block;padding:8px 13px;border-radius:9px;border:1px solid var(--border);background:var(--bg);font-weight:600;font-size:13.5px}
+.seg input:checked + span{background:var(--text);color:var(--bg);border-color:var(--text)}
+.seg input:focus-visible + span{outline:3px solid var(--gold);outline-offset:2px}
+.pill{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:700;background:var(--surface-2);color:var(--muted)}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.notice{padding:12px 14px;border-radius:12px;background:var(--warn-bg);color:var(--warn);font-size:13.5px}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:12px;font-size:14px}
+
+/* Dashboard */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.stat b{display:block;font-size:26px;font-weight:800;letter-spacing:-.02em}
+.stat small{color:var(--muted);font-weight:500}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+.list{display:flex;flex-direction:column}
+.li{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-top:1px solid var(--border)}
+.li:first-child{border-top:0}
+.li .t{font-weight:600;min-width:0}
+.li .t span{display:block;font-weight:400;color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.li .acts{display:flex;gap:6px;flex:none}
+.start{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:26px;border-radius:18px;background:linear-gradient(135deg,#C8102E,#7A0A1C);color:#fff;margin-bottom:16px;flex-wrap:wrap}
+.start h2{font-size:24px;letter-spacing:-.02em;max-width:22ch;line-height:1.2}
+.start p{opacity:.88;margin-top:6px;max-width:48ch}
+.start .btn{background:#fff;color:#7A0A1C;border-color:#fff}
+
+/* Composer */
+.studio{display:grid;grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:20px;align-items:start}
+.preview-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;padding:18px;background:var(--surface-2);border-radius:14px}
+.stage{--ar:1;width:min(100%,calc(66vh * var(--ar)));aspect-ratio:var(--ar);border-radius:10px;overflow:hidden;box-shadow:0 12px 36px rgba(0,0,0,.28);background:#222}
+.stage canvas{width:100%;height:100%;display:block}
+.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.tab{padding:7px 12px;border-radius:9px;border:1px solid var(--border);background:var(--bg);font-weight:600;font-size:13px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.cap-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap}
+.counter{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.counter.over{color:var(--primary);font-weight:700}
+.net-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.net{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--border);background:var(--bg);cursor:pointer;text-align:left;font-weight:600;font-size:14px}
+.net:hover{border-color:var(--text)}
+.net i{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;color:#fff;font-style:normal;font-weight:800;font-size:13px;flex:none}
+.net small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;line-height:1.2}
+.group-title{font-size:13px;font-weight:700;color:var(--muted);margin:14px 0 8px}
+.group-title:first-child{margin-top:0}
+
+/* News */
+.news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.news{display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+.news h3{font-size:17px;line-height:1.3;letter-spacing:-.01em}
+.news p{color:var(--muted);font-size:14px;flex:1}
+.cat{display:inline-block;align-self:flex-start;padding:3px 10px;border-radius:999px;background:var(--primary);color:#fff;font-size:12px;font-weight:700}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+
+/* Settings table */
+.integ{display:flex;flex-direction:column}
+.integ .li .t span{white-space:normal}
+
+/* Dialog */
+dialog{margin:auto;border:1px solid var(--border);border-radius:18px;padding:0;background:var(--surface);color:var(--text);width:min(480px,calc(100% - 28px));box-shadow:0 24px 80px rgba(0,0,0,.4)}
+dialog::backdrop{background:rgba(10,8,6,.55)}
+.dlg{padding:22px}
+.dlg h2{font-size:20px;margin-bottom:4px}
+.step{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-top:1px solid var(--border)}
+.step .n{width:26px;height:26px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:700;font-size:13px;flex:none}
+.step.done .n{background:var(--ok);color:#fff}
+.step .b{flex:1;min-width:0}
+.step .b p{color:var(--muted);font-size:13px;margin:2px 0 8px}
+
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--text);color:var(--bg);padding:11px 18px;border-radius:12px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60;max-width:calc(100% - 32px);text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1000px){
+  .studio{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid2{grid-template-columns:1fr}
+}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr}
+  .rail{position:fixed;top:auto;bottom:0;left:0;right:0;z-index:30;flex-direction:row;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));background:var(--surface);border-top:1px solid var(--border);gap:0}
+  .nav{flex-direction:column;gap:3px;padding:7px 4px;font-size:11px;text-align:center;justify-content:center;width:auto;flex:1}
+  main{padding:18px 16px calc(96px + env(safe-area-inset-bottom,0px))}
+  h1{font-size:25px}
+  .row2{grid-template-columns:1fr}
+  .link-chip{max-width:150px}
+  .brand span.name{display:none}
+  #toast{bottom:calc(86px + env(safe-area-inset-bottom,0px))}
+  .stage{width:min(100%,calc(60vh * var(--ar)))}
+}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+.lg-text{fill:var(--logo-text,#121212)}.lg-body{fill:var(--logo-body,#121212)}.lg-red{fill:var(--logo-red,#C8102E)}.brand{color:inherit;text-decoration:none}
+.brand svg{height:40px;width:auto;display:block}
+a.btn{color:inherit;text-decoration:none}
+#userName:empty{display:none}
+.logo-sym{display:none}
+@media (max-width:760px){.logo-full{display:none}.logo-sym{display:block}.brand svg{height:36px}.top-actions a.btn{display:none}.link-chip{max-width:130px}}
+.adrow{display:flex;flex-direction:column;gap:8px;padding:14px 0;border-top:1px solid var(--border)}
+.adrow:first-child{border-top:0;padding-top:0}
+.adth{width:100%;height:auto;border:1px solid var(--border);border-radius:6px;background:var(--surface-2);display:block}
+.adrow-b{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.adrow-b .t{min-width:0}
+.adrow-b .t span{display:block;color:var(--muted);font-size:12.5px;word-break:break-all}
+.adrow-b .acts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+@media (max-width:760px){.rail{overflow-x:auto;justify-content:flex-start}.nav{flex:0 0 auto;min-width:76px}}
+#gate{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:center;padding:24px;text-align:center}
+.gate-box{max-width:420px}
+.gate-box h2{font-size:22px;margin-bottom:8px}
+.gate-box p{color:var(--muted);margin-bottom:16px}
+.li .acts{flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:760px){#userName{display:none}}
+
+main.rh{margin:0 auto;padding:24px 28px 56px;max-width:1100px;width:100%}
+@media (max-width:760px){main.rh{padding:18px 16px 56px}}
+</style>
+<script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="staff.js"></script>
+</head>
+<body>
+<div id="gate"><div class="gate-box"><h2>A verificar o acesso…</h2></div></div>
+<header class="topbar">
+  <a class="brand" href="index.html" aria-label="PostAngola, ver o site"><span class="logo-full"><svg class="lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348 79" role="img" aria-label="PostAngola"><g transform="scale(0.62)"><defs><clipPath id="bh1p2"><rect x="8" y="8" width="104" height="92" rx="28"/></clipPath></defs>
+<path d="M38 94 L27 116.5 Q26 119 28.6 117.6 L66 94 Z" fill="#F5B800" stroke="#F5B800" stroke-width="3" stroke-linejoin="round"/>
+<g clip-path="url(#bh1p2)"><rect class="lg-red" x="0" y="0" width="120" height="54"/><rect class="lg-body" x="0" y="54" width="120" height="60"/></g>
+<path fill="#FFFFFF" fill-rule="evenodd" d="M36.5 28H64.5A19 19 0 0 1 64.5 66H50.5V80H36.5Z M64.5 40.5A6.5 6.5 0 1 0 64.5 53.5A6.5 6.5 0 1 0 64.5 40.5Z"/></g><path class="lg-text" d="M102.89 36.538999999999994H97.09400000000001V49.510999999999996H91.85000000000001V17.540999999999997H102.89Q106.57000000000001 17.540999999999997 109.123 18.805999999999997Q111.676 20.070999999999998 112.941 22.232999999999997Q114.206 24.394999999999996 114.206 27.062999999999995Q114.206 29.500999999999998 113.05600000000001 31.662999999999997Q111.906 33.824999999999996 109.376 35.181999999999995Q106.846 36.538999999999994 102.89 36.538999999999994ZM108.82400000000001 27.062999999999995Q108.82400000000001 21.818999999999996 102.89 21.818999999999996H97.09400000000001V32.260999999999996H102.89Q105.88000000000001 32.260999999999996 107.352 30.903999999999996Q108.82400000000001 29.546999999999997 108.82400000000001 27.062999999999995Z M116.13800000000002 36.815Q116.13800000000002 32.95099999999999 117.84000000000002 29.960999999999995Q119.54200000000002 26.970999999999997 122.48600000000002 25.360999999999997Q125.43 23.750999999999998 129.06400000000002 23.750999999999998Q132.698 23.750999999999998 135.642 25.360999999999997Q138.586 26.970999999999997 140.288 29.960999999999995Q141.99 32.95099999999999 141.99 36.815Q141.99 40.678999999999995 140.24200000000002 43.669Q138.49400000000003 46.659 135.48100000000002 48.292Q132.46800000000002 49.925 128.834 49.925Q125.24600000000001 49.925 122.34800000000001 48.292Q119.45000000000002 46.659 117.79400000000001 43.69199999999999Q116.13800000000002 40.724999999999994 116.13800000000002 36.815ZM136.608 36.815Q136.608 34.05499999999999 135.55 32.145999999999994Q134.49200000000002 30.236999999999995 132.74400000000003 29.270999999999994Q130.996 28.304999999999996 128.972 28.304999999999996Q126.94800000000001 28.304999999999996 125.22300000000001 29.270999999999994Q123.49800000000002 30.236999999999995 122.48600000000002 32.145999999999994Q121.47400000000002 34.05499999999999 121.47400000000002 36.815Q121.47400000000002 40.90899999999999 123.56700000000001 43.13999999999999Q125.66000000000001 45.370999999999995 128.834 45.370999999999995Q130.858 45.370999999999995 132.62900000000002 44.404999999999994Q134.4 43.43899999999999 135.50400000000002 41.50699999999999Q136.608 39.574999999999996 136.608 36.815Z M144.428 41.736999999999995H149.856Q149.994 43.346999999999994 151.397 44.428Q152.8 45.50899999999999 154.916 45.50899999999999Q157.124 45.50899999999999 158.34300000000002 44.657999999999994Q159.562 43.806999999999995 159.562 42.473Q159.562 41.047 158.205 40.357Q156.848 39.666999999999994 153.904 38.839Q151.052 38.056999999999995 149.25799999999998 37.321Q147.464 36.584999999999994 146.15300000000002 35.06699999999999Q144.842 33.54899999999999 144.842 31.064999999999998Q144.842 29.040999999999997 146.038 27.361999999999995Q147.234 25.682999999999996 149.465 24.717Q151.696 23.750999999999998 154.594 23.750999999999998Q158.918 23.750999999999998 161.563 25.935999999999996Q164.208 28.120999999999995 164.392 31.892999999999997H159.148Q159.01 30.190999999999995 157.768 29.178999999999995Q156.526 28.166999999999994 154.41 28.166999999999994Q152.34 28.166999999999994 151.236 28.948999999999995Q150.132 29.730999999999995 150.132 31.018999999999995Q150.132 32.03099999999999 150.868 32.72099999999999Q151.604 33.410999999999994 152.662 33.80199999999999Q153.72 34.193 155.79 34.791Q158.55 35.526999999999994 160.32100000000003 36.285999999999994Q162.092 37.044999999999995 163.38 38.516999999999996Q164.668 39.989 164.714 42.42699999999999Q164.714 44.589 163.518 46.291Q162.322 47.992999999999995 160.137 48.958999999999996Q157.952 49.925 155.008 49.925Q152.018 49.925 149.649 48.843999999999994Q147.28 47.763 145.9 45.89999999999999Q144.52 44.03699999999999 144.428 41.736999999999995Z M175.11 28.442999999999994V42.473Q175.11 43.898999999999994 175.777 44.519999999999996Q176.444 45.141 178.054 45.141H181.274V49.510999999999996H177.13400000000001Q173.592 49.510999999999996 171.70600000000002 47.855Q169.82 46.199 169.82 42.473V28.442999999999994H166.83V24.164999999999996H169.82V17.862999999999996H175.11V24.164999999999996H181.274V28.442999999999994Z"/><path class="lg-red" d="M205.60799999999998 42.979H192.22199999999998L189.922 49.510999999999996H184.44799999999998L195.902 17.494999999999997H201.974L213.428 49.510999999999996H207.908ZM204.136 38.70099999999999 198.938 23.842999999999996 193.694 38.70099999999999Z M240.2 34.56099999999999V49.510999999999996H235.00199999999998V35.342999999999996Q235.00199999999998 31.938999999999997 233.29999999999998 30.121999999999996Q231.59799999999998 28.304999999999996 228.65399999999997 28.304999999999996Q225.70999999999998 28.304999999999996 223.98499999999996 30.121999999999996Q222.25999999999996 31.938999999999997 222.25999999999996 35.342999999999996V49.510999999999996H217.01599999999996V24.164999999999996H222.25999999999996V27.062999999999995Q223.54799999999997 25.498999999999995 225.54899999999998 24.624999999999996Q227.54999999999998 23.750999999999998 229.80399999999997 23.750999999999998Q232.79399999999998 23.750999999999998 235.16299999999998 24.992999999999995Q237.53199999999998 26.234999999999996 238.86599999999999 28.672999999999995Q240.2 31.110999999999997 240.2 34.56099999999999Z M264.48799999999994 27.844999999999995V24.164999999999996H269.77799999999996V49.925Q269.77799999999996 53.42099999999999 268.3059999999999 56.157999999999994Q266.83399999999995 58.894999999999996 264.05099999999993 60.458999999999996Q261.268 62.022999999999996 257.40399999999994 62.022999999999996Q252.25199999999995 62.022999999999996 248.84799999999996 59.608Q245.44399999999996 57.193 244.98399999999995 53.053H250.18199999999996Q250.77999999999997 55.03099999999999 252.73499999999996 56.24999999999999Q254.68999999999997 57.468999999999994 257.40399999999994 57.468999999999994Q260.578 57.468999999999994 262.53299999999996 55.53699999999999Q264.48799999999994 53.605 264.48799999999994 49.925V45.693Q263.15399999999994 47.486999999999995 260.87699999999995 48.705999999999996Q258.59999999999997 49.925 255.70199999999997 49.925Q252.38999999999996 49.925 249.65299999999996 48.245999999999995Q246.91599999999997 46.56699999999999 245.32899999999995 43.553999999999995Q243.74199999999996 40.541 243.74199999999996 36.723Q243.74199999999996 32.905 245.32899999999995 29.961Q246.91599999999997 27.016999999999996 249.65299999999996 25.383999999999997Q252.38999999999996 23.750999999999998 255.70199999999997 23.750999999999998Q258.64599999999996 23.750999999999998 260.923 24.924Q263.2 26.096999999999998 264.48799999999994 27.844999999999995ZM256.806 28.304999999999996Q254.78199999999995 28.304999999999996 253.03399999999996 29.293999999999997Q251.28599999999997 30.282999999999998 250.20499999999998 32.192Q249.12399999999997 34.101 249.12399999999997 36.723Q249.12399999999997 39.345 250.20499999999998 41.32299999999999Q251.28599999999997 43.300999999999995 253.05699999999996 44.336Q254.82799999999997 45.370999999999995 256.806 45.370999999999995Q258.83 45.370999999999995 260.578 44.358999999999995Q262.32599999999996 43.346999999999994 263.4069999999999 41.391999999999996Q264.48799999999994 39.437 264.48799999999994 36.815Q264.48799999999994 34.193 263.4069999999999 32.260999999999996Q262.32599999999996 30.328999999999997 260.578 29.316999999999997Q258.83 28.304999999999996 256.806 28.304999999999996Z M273.59599999999995 36.815Q273.59599999999995 32.95099999999999 275.29799999999994 29.960999999999995Q276.99999999999994 26.970999999999997 279.94399999999996 25.360999999999997Q282.888 23.750999999999998 286.52199999999993 23.750999999999998Q290.15599999999995 23.750999999999998 293.09999999999997 25.360999999999997Q296.044 26.970999999999997 297.746 29.960999999999995Q299.448 32.95099999999999 299.448 36.815Q299.448 40.678999999999995 297.69999999999993 43.669Q295.95199999999994 46.659 292.93899999999996 48.292Q289.92599999999993 49.925 286.292 49.925Q282.70399999999995 49.925 279.8059999999999 48.292Q276.90799999999996 46.659 275.25199999999995 43.69199999999999Q273.59599999999995 40.724999999999994 273.59599999999995 36.815ZM294.066 36.815Q294.066 34.05499999999999 293.0079999999999 32.145999999999994Q291.94999999999993 30.236999999999995 290.20199999999994 29.270999999999994Q288.45399999999995 28.304999999999996 286.42999999999995 28.304999999999996Q284.40599999999995 28.304999999999996 282.6809999999999 29.270999999999994Q280.95599999999996 30.236999999999995 279.94399999999996 32.145999999999994Q278.93199999999996 34.05499999999999 278.93199999999996 36.815Q278.93199999999996 40.90899999999999 281.025 43.13999999999999Q283.11799999999994 45.370999999999995 286.292 45.370999999999995Q288.316 45.370999999999995 290.087 44.404999999999994Q291.85799999999995 43.43899999999999 292.962 41.50699999999999Q294.066 39.574999999999996 294.066 36.815Z M308.51 15.470999999999997V49.510999999999996H303.26599999999996V15.470999999999997Z M324.24199999999996 23.750999999999998Q327.23199999999997 23.750999999999998 329.46299999999997 24.924Q331.69399999999996 26.096999999999998 333.02799999999996 27.844999999999995V24.164999999999996H338.318V49.510999999999996H333.02799999999996V45.739Q331.69399999999996 47.532999999999994 329.394 48.729Q327.094 49.925 324.15 49.925Q320.88399999999996 49.925 318.16999999999996 48.245999999999995Q315.45599999999996 46.56699999999999 313.86899999999997 43.553999999999995Q312.282 40.541 312.282 36.723Q312.282 32.905 313.86899999999997 29.961Q315.45599999999996 27.016999999999996 318.193 25.383999999999997Q320.93 23.750999999999998 324.24199999999996 23.750999999999998ZM325.346 28.304999999999996Q323.322 28.304999999999996 321.57399999999996 29.293999999999997Q319.82599999999996 30.282999999999998 318.745 32.192Q317.664 34.101 317.664 36.723Q317.664 39.345 318.745 41.32299999999999Q319.82599999999996 43.300999999999995 321.597 44.336Q323.368 45.370999999999995 325.346 45.370999999999995Q327.37 45.370999999999995 329.118 44.358999999999995Q330.866 43.346999999999994 331.947 41.391999999999996Q333.02799999999996 39.437 333.02799999999996 36.815Q333.02799999999996 34.193 331.947 32.260999999999996Q330.866 30.328999999999997 329.118 29.316999999999997Q327.37 28.304999999999996 325.346 28.304999999999996Z"/></svg></span><span class="logo-sym"><svg class="lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 128" role="img" aria-label="PostAngola"><defs><clipPath id="bm1p"><rect x="8" y="8" width="104" height="92" rx="28"/></clipPath></defs>
+<path d="M38 94 L27 116.5 Q26 119 28.6 117.6 L66 94 Z" fill="#F5B800" stroke="#F5B800" stroke-width="3" stroke-linejoin="round"/>
+<g clip-path="url(#bm1p)"><rect class="lg-red" x="0" y="0" width="120" height="54"/><rect class="lg-body" x="0" y="54" width="120" height="60"/></g>
+<path fill="#FFFFFF" fill-rule="evenodd" d="M36.5 28H64.5A19 19 0 0 1 64.5 66H50.5V80H36.5Z M64.5 40.5A6.5 6.5 0 1 0 64.5 53.5A6.5 6.5 0 1 0 64.5 40.5Z"/></svg></span><span class="name" id="brandName" hidden>PostAngola</span></a>
+  <div class="top-actions">
+    <a class="btn sm" href="PostAngola.html">← Painel</a>
+    <span class="pill" id="userName"></span>
+    <button class="btn sm" id="btnSignOut" type="button">Sair</button>
+  </div>
+</header>
+<main class="rh">
+  <div class="page-head"><div><h1>RH e Equipa</h1><p class="sub">Fichas, níveis de acesso, convites e auditoria. As regras são impostas pela base de dados: cada pessoa só vê o que o seu nível permite.</p></div></div>
+  <div id="staffRoot"></div>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
 <script>
-function getPermissions(me){
-  const c=me.access_code||'N0'; const dept=me.department;
-  const isC=c==='C1', isM100=['M100','M1'].includes(c), isB10=c==='B10', isDirectorRH=dept==='RH'&&(me.rh_role==='director_rh'||c==='B2'), isTecnicoRH=dept==='RH'&&(me.rh_role==='tecnico_rh'||c==='B1'), isDirector=c.startsWith('B'), isChefe=c==='N2'||c.startsWith('B');
-  return {
-    canAdd:isC||isM100||isDirectorRH||isTecnicoRH,
-    canEdit:isC||isM100||isDirectorRH||isTecnicoRH,
-    canApprove:isC,
-    canViewAll:isC||isM100||isB10||isDirectorRH||isTecnicoRH,
-    canViewDept:isDirector||isChefe,
-    ownDept:dept, code:c, isC
-  };
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+try{const t=JSON.parse(localStorage.getItem('pa:uiTheme'));if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}
+let tt;function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('show'),3600)}
+function gate(h){const g=$('#gate');g.hidden=false;g.querySelector('.gate-box').innerHTML=h}
+const CFG=window.PA_CONFIG||{};
+const sb=(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY&&window.supabase)?window.supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY):null;
+$('#btnSignOut').addEventListener('click',async()=>{if(sb)await sb.auth.signOut();location.href='index.html'});
+async function init(){
+  const back='<a class="btn primary" href="PostAngola.html">Voltar ao painel</a>';
+  if(!sb){gate('<h2>Falta configurar o Supabase</h2><p>Abra o ficheiro config.js.</p>');return}
+  const r=await PAStaff.loadMe(sb);
+  if(r.error==='login'){location.replace('index.html?login=1');return}
+  if(r.error==='migration'){gate('<h2>Base de dados por atualizar</h2><p>Falta correr o ficheiro supabase_rh.sql no SQL Editor do Supabase.</p>'+back);return}
+  if(r.error){gate('<h2>Perfil não encontrado</h2><p>Tente sair e entrar de novo.</p>'+back);return}
+  const m=r.me;
+  if(!m.active){gate('<h2>Conta inativa ou por aprovar</h2><p>Fale com o RH ou com o proprietário.</p>'+back);return}
+  if(m.level<10){gate('<h2>Acesso reservado</h2><p>O seu nível ('+PAStaff.esc(m.access_code)+') não permite aceder a esta página.</p>'+back);return}
+  $('#userName').textContent=m.name+' · '+m.access_code+' · '+(PAStaff.LABELS[m.access_code]||'');
+  $('#gate').hidden=true;
+  PAStaff.mount($('#staffRoot'),{sb:sb,me:m,mode:'full',toast:toast});
 }
-function canSeeProfile(viewer, target, perms){
-  if(perms.canViewAll) return true;
-  if(perms.canViewDept && target.department===perms.ownDept) return true;
-  if(viewer.id===target.id) return true;
-  return false;
-}
-(async()=>{
-  const supa=supabase.createClient(PA_CONFIG.SUPABASE_URL, PA_CONFIG.SUPABASE_ANON_KEY);
-  const esc=s=>String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
-  const {data:{user}}=await supa.auth.getUser(); if(!user){document.body.innerHTML='Faz login';return}
-  const {data:me}=await supa.from('profiles').select('*').eq('id',user.id).single(); window._me=me;
-  const perms=getPermissions(me); document.getElementById('myCode').textContent=me.full_name+' · '+me.access_code+' · '+me.department;
-  if(perms.canAdd){document.getElementById('addCard').hidden=false; document.getElementById('btnShowAdd').hidden=false;}
-  document.getElementById('btnShowAdd').onclick=()=>document.getElementById('addCard').hidden=false;
-  const {data:perf}=await supa.from('v_performance').select('*');
-  const {data:all}=await supa.from('profiles').select('*').order('created_at',{ascending:false});
-  window._all=all; window._supa=supa; window._user=user; window._perms=perms;
-  const media=perf?.length?perf.reduce((s,x)=>s+(x.news_month||0),0)/perf.length:0;
-  document.getElementById('avgInfo').textContent='Média: '+media.toFixed(1);
-  const visible=all.filter(p=>canSeeProfile(me,p,perms));
-  document.getElementById('viewInfo').textContent=perms.canViewAll?'Vê todos':perms.canViewDept?`Vê dept. ${perms.ownDept}`:'Só você';
-  document.getElementById('list').innerHTML=visible.map(p=>{
-    const pr=perf?.find(x=>x.id===p.id); const pend=p.approval_status==='pendente'?'<span class=pill style=background:orange;color:#fff>PENDENTE</span>':'';
-    return `<div class="li"><div><b>${esc(p.full_name)}</b> ${pend} <span class="pill">${p.access_code}</span> <span class="pill">${esc(p.department||'')} / ${esc(p.rh_role||'')}</span><br><span style="font-size:12px;color:#6b7280">${esc(p.email)} · ID:${p.id.slice(0,8)} · ${pr?pr.news_month+' no mês':''}</span></div><div style="display:flex;flex-direction:column;gap:6px"><button class="btn primary" onclick="openFicha('${p.id}')">Ver ficha completa</button>${perms.canApprove&&p.approval_status==='pendente'?`<button class="btn green" onclick="approveEmp('${p.id}')">Aprovar</button>`:''}</div></div>`;
-  }).join('')||'<p style="color:#999">Sem acesso a outros perfis</p>';
-
-  window.openFicha=async(id)=>{
-    const p=window._all.find(x=>x.id===id); const canEdit=perms.canEdit;
-    const d=document.createElement('dialog'); d.innerHTML=`<div style="padding:20px;max-height:85vh;overflow:auto"><div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Ficha Completa</h3><span class="pill">${esc(p.approval_status||'aprovado')} · ID auto: ${p.id.slice(0,13)}...</span></div>
-    <div style="margin-top:12px;background:#f9fafb;padding:12px;border-radius:12px">
-      <div class="row"><b>Nome completo</b><span>${esc(p.full_name)}</span></div>
-      <div class="row"><b>Email</b><span>${esc(p.email)}</span></div>
-      <div class="row"><b>Data Nasc.</b><span>${p.date_of_birth||'<i style=color:#999>sem dados</i>'}</span></div>
-      <div class="row"><b>Contacto</b><span>${esc(p.phone||'sem dados')}</span></div>
-      <div class="row"><b>Morada</b><span>${esc(p.address||'sem dados')}</span></div>
-      <div class="row"><b>NIF</b><span>${esc(p.nif||'sem dados')}</span></div>
-      <div class="row"><b>Formação</b><span>${esc(p.formation||'sem dados')}</span></div>
-      <div class="row"><b>Categoria</b><span>${esc(p.employee_category||'')}</span></div>
-      <div class="row"><b>Departamento</b><span>${esc(p.department||'')}</span></div>
-      <div class="row"><b>Função RH</b><span>${esc(p.rh_role||'')}</span></div>
-      <div class="row"><b>Acesso</b><span>${esc(p.access_code)} / ${esc(p.role)}</span></div>
-      <div class="row"><b>Notas</b><span>${esc(p.notes||'-')}</span></div>
-    </div>
-    <div id="editBox" ${canEdit?'':'hidden'} style="margin-top:16px;border-top:1px solid #eee;padding-top:12px">
-      <h4 style="margin:0 0 8px">✏️ Editar (só RH Técnico, Director RH, M100, C)</h4>
-      <div class="grid2"><div><label>Contacto</label><input id="ePhone" value="${esc(p.phone||'')}"></div><div><label>Morada</label><input id="eAddr" value="${esc(p.address||'')}"></div><div><label>Formação</label><input id="eForm" value="${esc(p.formation||'')}"></div><div><label>NIF</label><input id="eNif" value="${esc(p.nif||'')}"></div><div><label>Departamento</label><select id="eDept"><option>${p.department||'Redação'}</option><option>Redação</option><option>RH</option><option>Comercial</option><option>Técnico</option><option>Direção</option></select></div><div><label>Função RH</label><select id="eRh"><option value="${p.rh_role||'funcionario'}">${p.rh_role||'funcionario'}</option><option value="funcionario">funcionario</option><option value="tecnico_rh">tecnico_rh</option><option value="director_rh">director_rh</option><option value="ceo">ceo</option></select></div></div><label>Notas</label><textarea id="eNotes">${esc(p.notes||'')}</textarea>
-      <div style="margin-top:10px;display:flex;gap:8px;justify-content:flex-end"><button class="btn" onclick="this.closest('dialog').close()">Fechar</button><button class="btn primary" id="btnSave">Guardar alterações</button></div>
-    </div>
-    <div ${canEdit?'hidden':''} style="margin-top:12px;text-align:right"><button class="btn" onclick="this.closest('dialog').close()">Fechar</button> <span style="font-size:12px;color:#999">Sem permissão para editar</span></div>
-    </div>`;
-    document.body.appendChild(d); d.showModal();
-    d.querySelector('#btnSave')?.addEventListener('click',async()=>{
-      const {error}=await window._supa.from('profiles').update({phone:d.querySelector('#ePhone').value, address:d.querySelector('#eAddr').value, formation:d.querySelector('#eForm').value, nif:d.querySelector('#eNif').value, department:d.querySelector('#eDept').value, rh_role:d.querySelector('#eRh').value, notes:d.querySelector('#eNotes').value}).eq('id',id);
-      if(error) alert(error.message); else {d.close(); location.reload();}
-    });
-    d.addEventListener('close',()=>d.remove());
-  };
-  window.approveEmp=async(id)=>{const {error}=await supa.from('profiles').update({approval_status:'aprovado',approved_by:user.id}).eq('id',id); if(error)alert(error.message);else location.reload();};
-  document.getElementById('btnCreate').onclick=async()=>{
-    const name=document.getElementById('fName').value.trim(), email=document.getElementById('fEmail').value.trim(), access=document.getElementById('fAccess').value;
-    if(!name||!email){alert('Nome e email');return}
-    const btn=document.getElementById('btnCreate'); btn.disabled=true;
-    try{const tempPass='PostAngola@'+Math.floor(1000+Math.random()*9000); const {data:sign,error:se}=await supa.auth.signUp({email,password:tempPass,options:{data:{full_name:name}}}); if(se)throw se; const nid=sign.user?.id; const role=access.startsWith('B')?'director':access.startsWith('M')||access==='C1'?'admin':'editor'; const status=perms.isC?'aprovado':'pendente'; const rh=access==='B1'?'tecnico_rh':access==='B2'?'director_rh':'funcionario'; const payload={id:nid,full_name:name,email,access_code:access,role,phone:document.getElementById('fPhone').value||null,address:document.getElementById('fAddr').value||null,nif:document.getElementById('fNif').value||null,formation:document.getElementById('fForm').value||null,date_of_birth:document.getElementById('fDob').value||null,employee_category:document.getElementById('fCat').value,department:document.getElementById('fDept').value,rh_role:rh,approval_status:status,requested_by:user.id,notes:document.getElementById('fNotes').value||null}; const {error}=await supa.from('profiles').upsert(payload); if(error)throw error; alert(`Criado ID:${nid.slice(0,8)} Status:${status} Email:${email} Pass:${tempPass}`); location.reload();}catch(e){alert(e.message); btn.disabled=false;}
-  };
+init();
 })();
-</script></body>
+</script>
+</body>
 </html>
